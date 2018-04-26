@@ -98,10 +98,22 @@ namespace StarKnightsEpisode1.Scene
 
         public void Draw()
         {
+            bool first = true;
             foreach (var light in Lights)
             {
                 LitImage.Graph = this;
                 LitImage.Light = light;
+
+                if (first)
+                {
+                    Render.SetBlend(BlendMode.None);
+                    first = false;
+                }
+                else
+                {
+                    Render.SetBlend(BlendMode.Add);
+                }
+
                 LitImage.Bind();
 
                 foreach (var node in Nodes)

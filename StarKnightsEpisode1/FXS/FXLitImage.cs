@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StarKnightsEpisode1.FX;
 using StarKnightsEpisode1.Scene;
-
+using StarKnightsEpisode1.Util;
 namespace StarKnightsEpisode1.FXS
 {
     public class FXLitImage : VEffect
@@ -36,32 +36,25 @@ namespace StarKnightsEpisode1.FXS
 
             // px = Light.X + Graph.X;
             // py = Light.Y + Graph.Y;
-            px = Light.X + Graph.X*2.0f;
-            py = Light.Y + Graph.Y*2.0f;
-            float nx, ny;
+            px = Light.X;
+            py = Light.Y;
 
-            //float rr = (180.0f-Graph.Rot) * (float)Util.PI / 180.0f;
+            //px = (sw / 2) + px;
+            //py = (sh / 2) + py;
 
-            
+            px = px - Graph.X * Graph.Z;
+            py = py - Graph.Y * Graph.Z;
 
-            //px = px + (sw / 2);
-            //py = py + (sh / 2);
+            var res = Maths.Rotate(px, py, Graph.Rot, 1.0f);
 
-         //   nx = (float)Util.Cos(rr) * (px*Graph.Z) - (float)Util.Sin(rr) * (py*Graph.Z);
-          //  ny = (float)Util.Sin(rr) * (px*Graph.Z) + (float)Util.Cos(rr) * (py*Graph.Z);
-
-           // nx = nx + (sw / 2);
-           // ny = ny + (sh / 2);
-
-                        //nx = nx - (sw / 2);
-            //ny = ny - (sh / 2);
-
+            res = Maths.Push(res, sw / 2, sh / 2);
+                
 
 
 
 
             SetTex("tDiffuse", 0);
-            //SetVec3("lPos", new OpenTK.Vector3(nx,ny,0));
+            SetVec3("lPos", new OpenTK.Vector3(res.X,res.Y,0));
             SetVec3("lDif", Light.Diffuse);
             SetVec3("lSpec", Light.Specular);
             SetFloat("lShiny", Light.Shiny);

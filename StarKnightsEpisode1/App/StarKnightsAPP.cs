@@ -86,20 +86,22 @@ namespace StarKnightsEpisode1.App
 
             l1 = new GraphLight()
             {
-                Range = 250,
-                X = -200,
-                Y = -200
+                Range = 650,
+                X = -100,
+                Y = -100,
+                Diffuse = new Vector3(0, 3, 0)
             };
             l2 = new GraphLight()
             {
-                Range = 100,
-                X = 150,
+                Range = 640,
+                X = 0,
                 Y = 0,
-                Diffuse = new Vector3(0.8f, 0.2f, 0.2f)
+                Diffuse = new Vector3(2.8f, 2.2f, 2.2f)
             };
             G1.X = 0;
             G1.Y = 0;
-            G1.Add(l2);
+            G1.Add(l2,l1);
+            l2.X = 300;
 
          }
         protected override void OnResize(EventArgs e)
@@ -112,8 +114,13 @@ namespace StarKnightsEpisode1.App
         }
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            G1.Z = 1.0f;
+            //G1.Z = 1.0f;
             ml = true;
+            G1.X = 0;
+            G1.Y = 0;
+            //G1.Rot = G1.Rot + 5.0f;
+
+            //if (e.Button == MouseButton.Right) G1.X = G1.X + 100;
         }
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
@@ -130,28 +137,35 @@ namespace StarKnightsEpisode1.App
             }
             else
             {
-               G1.X = G1.X + e.XDelta;
-              G1.Y = G1.Y + e.YDelta;
-               // G1.Z = G1.Z + (float)e.XDelta * 0.1f;
-               // if (G1.Z < 0.1f) G1.Z = 0.1f;
+           //    G1.X = G1.X + e.XDelta;
+         //     G1.Y = G1.Y + e.YDelta;
+              // G1.Z = G1.Z + (float)e.XDelta * 0.1f;
+            //    if (G1.Z < 1.0f) G1.Z =1.0f;
                             }
+
+
 
 
             //G1.Z = 1.0f;
             //G1.X = G1.X + e.XDelta;
             //G1.Y = G1.Y + e.YDelta;
 
-           // S1.X = 100;
+            // S1.X = 100;
+            G1.X = G1.X + e.XDelta * 5;
+            G1.Y = G1.Y + e.YDelta * 5;
         }
         float ang = 0;
         protected override void OnRenderFrame(FrameEventArgs e)
         {
 
+            //
+            G1.Z = 5.0f;
+            G1.Z = 0.7f;
             MakeCurrent();
             base.OnRenderFrame(e);
             ang = ang + 1.0f;
            // G1.X = G1.X + 1.0f;
-            G1.Rot = ang;
+           G1.Rot = ang;
 
 
 

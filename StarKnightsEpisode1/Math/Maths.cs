@@ -8,6 +8,10 @@ namespace StarKnightsEpisode1.Util
 {
     public static class Maths
     {
+        public static Vector2 Push(Vector2 p,float x,float y)
+        {
+            return new Vector2(p.X + x, p.Y + y);
+        }
         public static Vector2[] Push(Vector2[] p, float x, float y, float scale = 1.0f)
         {
 
