@@ -4,10 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StarKnightsEpisode1.Draw;
+using StarKnightsEpisode1.FXS;
 namespace StarKnightsEpisode1.Scene
 {
     public class SceneGraph
     {
+
+        public FXLitImage LitImage
+        {
+            get;
+            set;
+        }
+
         public float X
         {
             get;
@@ -35,6 +43,12 @@ namespace StarKnightsEpisode1.Scene
             set;
         }
 
+        public List<GraphLight> Lights
+        {
+            get;
+            set;
+        }
+
         public SceneGraph()
         {
             X = 0;
@@ -42,32 +56,73 @@ namespace StarKnightsEpisode1.Scene
             Z = 1;
             Rot = 0;
             Nodes = new List<GraphNode>();
+            Lights = new List<GraphLight>();
+            LitImage = new FXLitImage();
+
         }
+
         public void Add(GraphNode node)
         {
             node.Graph = this;
             Nodes.Add(node);
         }
 
-        public void Draw()
+        public void Add(params GraphNode[] nodes)
         {
 
-            foreach(var node in Nodes)
+            foreach(var node in nodes)
             {
 
-                float[] xc;
-                float[] yc;
-
-                node.SyncCoords();
-
-                xc = node.XC;
-                yc = node.YC;
-
-                Render.Image(xc, yc, node.ImgFrame);
-        
+                node.Graph = this;
+                Nodes.Add(node);
 
             }
 
+        }
+
+
+        public void Add(GraphLight node)
+        {
+            node.Graph = this;
+            Lights.Add(node);
+        }
+
+        public void Add(params GraphLight[] lights)
+        {
+            foreach(var light in lights)
+            {
+                light.Graph = this;
+                Lights.Add(light);
+            }
+        }
+
+        public void Draw()
+        {
+            foreach (var light in Lights)
+            {
+                LitImage.Graph = this;
+                LitImage.Light = light;
+                LitImage.Bind();
+
+                foreach (var node in Nodes)
+                {
+
+                    float[] xc;
+                    float[] yc;
+
+                    node.SyncCoords();
+
+                    xc = node.XC;
+                    yc = node.YC;
+
+                    Render.Image(xc, yc, node.ImgFrame);
+
+
+                }
+
+                LitImage.Release();
+
+            }
         }
 
     }

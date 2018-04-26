@@ -55,6 +55,17 @@ namespace StarKnightsEpisode1.Draw
                     break;
             }
         }
+        public static void Image(Vector2[] p,Tex2D img)
+        {
+            float[] x = new float[4];
+            float[] y = new float[4];
+            for(int i = 0; i < 4; i++)
+            {
+                x[i] = p[i].X;
+                y[i] = p[i].Y;
+            }
+            Image(x, y, img);
+        }
         public static void Image(float[] xc,float[] yc,Tex2D img)
         {
 

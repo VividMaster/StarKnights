@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using StarKnightsEpisode1.Util;
+using OpenTK;
 namespace StarKnightsEpisode1.Scene
 {
+
     public class GraphNode
     {
 
@@ -55,60 +57,42 @@ namespace StarKnightsEpisode1.Scene
         public void SyncCoords()
         {
 
-
+            int sw = StarKnightsEpisode1.App.StarKnightsAPP.W;
+            int sh = StarKnightsEpisode1.App.StarKnightsAPP.H;
 
             float[] ox = new float[4];
             float[] oy = new float[4];
 
-            ox[0] = (-W / 2) * Graph.Z * Z;
-            ox[1] = (W / 2) * Graph.Z * Z;
-            ox[2] = (W / 2) * Graph.Z* Z ;
-            ox[3] = (-W / 2) *Graph.Z*Z;
+            ox[0] = (-W / 2);// * Graph.Z * Z;
+            ox[1] = (W / 2);// * Graph.Z * Z;
+            ox[2] = (W / 2);// * Graph.Z* Z ;
+            ox[3] = (-W / 2);// *Graph.Z*Z;
 
-            oy[0] = (-H / 2) * Graph.Z*Z;
-            oy[1] = (-H / 2) *Graph.Z*Z;
-            oy[2] = (H / 2) * Graph.Z * Z;
-            oy[3] = (H / 2) * Graph.Z * Z;
-
-            float rr = Rot * (float)Math.PI / 180.0f;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-                float xo = StarKnightsEpisode1.App.StarKnightsAPP.W / 2 - Graph.X;
-                float yo = StarKnightsEpisode1.App.StarKnightsAPP.H / 2 - Graph.Y;
-
-                XC[i] = xo + ((X*Graph.Z*Z) + ((float)Math.Cos(rr) * ox[i] - (float)Math.Sin(rr) * oy[i]));
-                YC[i] = yo + ((Y*Graph.Z*Z) + ((float)Math.Sin(rr) * ox[i] + (float)Math.Cos(rr) * oy[i]));
+            oy[0] = (-H / 2);// * Graph.Z*Z;
+            oy[1] = (-H / 2);// *Graph.Z*Z;
+            oy[2] = (H / 2);// * Graph.Z * Z;
+            oy[3] = (H / 2);// * Graph.Z * Z;
 
 
-            }
+            Vector2[] p = Maths.RotateOC(ox, oy, Rot,Z,0,0);
 
-            rr = (180.0f-Graph.Rot) * (float)Math.PI / 180.0f;
+            float mx, my;
 
-            
-            for(int i = 0; i < 4; i++)
-            {
+            p = Maths.Push(p, X-Graph.X, Y-Graph.Y);
+         
+            p = Maths.RotateOC(p, Graph.Rot, Graph.Z, 0,0);
 
-                float xc, yc;
+            p = Maths.Push(p, sw / 2, sh / 2);
 
-                xc = (Graph.X + App.StarKnightsAPP.W / 2) - XC[i];
-                yc = (Graph.Y + App.StarKnightsAPP.H / 2) - YC[i];
+            //p = Maths.Push(p, X, Y);
 
-                
+            //p = Maths.Push(p,sw / 2, sh / 2);
 
-                float nx = (float)Math.Cos(rr) * xc - (float)Math.Sin(rr) * yc;
-                float ny = (float)Math.Sin(rr) * xc + (float)Math.Cos(rr) * yc;
-
-                nx = nx + (App.StarKnightsAPP.W / 2);
-                ny = ny + (App.StarKnightsAPP.H / 2);
-
-                XC[i] = nx;
-                YC[i] = ny;
-
-            }
+            //p = Maths.Push(p, X+sw/2, Y+sh/2, Graph.Z);
 
 
+
+            Draw.Render.Image(p, ImgFrame);
 
 
 

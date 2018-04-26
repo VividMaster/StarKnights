@@ -74,9 +74,11 @@
     <Compile Include="FXS\FXLitImage.cs" />
     <Compile Include="FX\FXG.cs" />
     <Compile Include="FX\VEffect.cs" />
+    <Compile Include="Math\Maths.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App\StarKnightsAPP.cs" />
+    <Compile Include="Scene\GraphLight.cs" />
     <Compile Include="Scene\GraphSprite.cs" />
     <Compile Include="Scene\SceneGraph.cs" />
     <Compile Include="Scene\GraphNode.cs" />
