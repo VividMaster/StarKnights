@@ -84,6 +84,11 @@
     <Compile Include="Scene\GraphNode.cs" />
     <Compile Include="Tex\Tex2D.cs" />
     <Compile Include="Tex\TexBase.cs" />
+    <Compile Include="VFX\FXParticleSystem\ParticleBase.cs" />
+    <Compile Include="VFX\FXParticleSystem\SoftParticle.cs" />
+    <Compile Include="VFX\VFXBase.cs" />
+    <Compile Include="VFX\FXParticleSystem\VFXParticleSystem.cs" />
+    <Compile Include="VFX\VisualFX.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -14,7 +14,7 @@ namespace StarKnightsEpisode1.Draw
 {
     public enum BlendMode
     {
-        None,Alpha,Add,Mod,Sub
+        None,Alpha,Add,Mod,Sub,SoftLight
     }
     public static class Render
     {
@@ -52,6 +52,10 @@ namespace StarKnightsEpisode1.Draw
                 case BlendMode.Add:
                     GL.Enable(EnableCap.Blend);
                     GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+                    break;
+                case BlendMode.SoftLight:
+                    GL.Enable(EnableCap.Blend);
+                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.One);
                     break;
             }
         }

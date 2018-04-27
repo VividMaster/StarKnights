@@ -50,7 +50,14 @@ namespace StarKnightsEpisode1.Util
             res.X = p.X * Cos(a) - p.Y * Sin(a);
             res.Y = p.X * Sin(a) + p.Y * Cos(a);
         }
-
+        public static Vector2[] Rotate(Vector2[] p, float a, float s = 1.0f)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                p[i] = Rotate(p[i].X, p[i].Y, a, s);
+            }
+            return p;
+        }
         public static Vector2 Rotate(ref Vector2 p, ref float a)
         {
             var res = new Vector2();
