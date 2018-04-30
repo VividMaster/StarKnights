@@ -7,12 +7,83 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 
-namespace StarKnightsEpisode1.Tex
+namespace StarEngine.Tex
 {
     public class Tex2D : TexBase
     {
 
+        public string Name
+        {
+            get;
+            set;
+        }
         public static byte[] TmpStore = null;
+        public override string ToString()
+        {
+            return "Img:" + Name;    
+        }
+        public Tex2D(Bitmap bit,bool alpha)
+        {
+            if (TmpStore == null)
+            {
+
+                TmpStore = new byte[4096 * 4096 * 4];
+
+            }
+
+            GL.Enable(EnableCap.Texture2D);
+            ID = GL.GenTexture();
+
+            GL.BindTexture(TextureTarget.Texture2D, ID);
+
+            Bitmap img = bit;
+            
+            //System.Drawing.Imaging.BitmapData dat = img.LockBits( new Rectangle(0, 0, img.Width, img.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.);
+
+            Width = img.Width;
+            Height = img.Height;
+            Alpha = alpha;
+
+            //GL.TexImage2D(TextureTarget.Texture2D,0,PixelInternalFormat.)
+
+
+
+            int pi = 0;
+            for (int y = 0; y < img.Height; y++)
+            {
+                for (int x = 0; x < img.Width; x++)
+                {
+                    var pix = img.GetPixel(x, y);
+                    TmpStore[pi++] = pix.R;
+                    TmpStore[pi++] = pix.G;
+                    TmpStore[pi++] = pix.B;
+                    if (alpha)
+                    {
+                        TmpStore[pi++] = pix.A;
+                    }
+
+                }
+            }
+
+
+            if (alpha)
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TmpStore);
+            }
+            else
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, TmpStore);
+            }
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+
+        }
         public Tex2D(string path,bool alpha=false)
         {
 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StarKnightsEpisode1.Scene;
-using StarKnightsEpisode1.Tex;
-using StarKnightsEpisode1.Util;
+using StarEngine.Scene;
+using StarEngine.Tex;
+using StarEngine.Util;
 
-namespace StarKnightsEpisode1.VFX.FXParticleSystem
+namespace StarEngine.VFX
 {
     public class ParticleBase
     {

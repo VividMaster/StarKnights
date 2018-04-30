@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using StarKnightsEpisode1.Util;
-namespace StarKnightsEpisode1.VFX.FXParticleSystem
+using StarEngine.Util;
+namespace StarEngine.VFX
 {
     public class SoftParticle : ParticleBase
     {
@@ -20,8 +20,8 @@ namespace StarKnightsEpisode1.VFX.FXParticleSystem
 
             var g = VFX.VisualFX.Graph;
 
-            int sw = StarKnightsEpisode1.App.StarKnightsAPP.W;
-            int sh = StarKnightsEpisode1.App.StarKnightsAPP.H;
+            int sw = StarEngine.App.StarApp.W;
+            int sh = StarEngine.App.StarApp.H;
 
             float[] ox = new float[4];
             float[] oy = new float[4];

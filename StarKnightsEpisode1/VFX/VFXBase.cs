@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarKnightsEpisode1.VFX
+namespace StarEngine.VFX
 {
     public class VFXBase
     {

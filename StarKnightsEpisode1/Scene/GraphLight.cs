@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StarKnightsEpisode1.Tex;
+using StarEngine.Tex;
 using OpenTK;
-namespace StarKnightsEpisode1.Scene
+namespace StarEngine.Scene
 {
     public class GraphLight : GraphNode
     {

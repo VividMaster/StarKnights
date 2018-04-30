@@ -3,62 +3,136 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StarKnightsEpisode1.Util;
+using StarEngine.Util;
 using OpenTK;
-namespace StarKnightsEpisode1.Scene
+using StarEngine.Reflect;
+using System.ComponentModel;
+namespace StarEngine.Scene
 {
-
+    
+    [DefaultProperty("Name")]
     public class GraphNode
     {
 
+        public ClassIO ClassCopy
+        {
+            get;
+            set;
+        }
+        
+        public List<GraphNode> Nodes
+        {
+            get;
+            set;
+        }
+
+        [Description("The Visual Image of the Node"),Category("Visuals"),DefaultValue(null)]
         public Tex.Tex2D ImgFrame
         {
             get;
             set;
         }
 
+        public void CopyProps()
+        {
+
+            ClassCopy = new ClassIO(this);
+            ClassCopy.Copy();
+
+        }
+
+        public void RestoreProps()
+        {
+
+            ClassCopy.Reset();
+
+        }
+
+        [Description("The Visual Bitmap(Sets the image as well)"),Category("Visuals")]
+       public System.Drawing.Bitmap ImgBitmap
+        {
+            get
+            {
+                return _ImgBit;
+            }
+            set
+            {
+                if (value == null) return;
+                _ImgBit = value;
+                ImgFrame = new Tex.Tex2D(value, true);
+                ImgFrame.Name = ImgBitmap.ToString();
+                W = ImgFrame.Width;
+                H = ImgFrame.Height;
+            }
+        }
+        private System.Drawing.Bitmap _ImgBit;
+
+        
+
+        [Description("The textual name of the node"),Category("Names"),DefaultValue("NewNode0")]
+        public string Name
+        {
+            get;
+            set;
+        }
+        
+        [Description("The X position of the node"),Category("Locale")]
         public float X
         {
             get;
             set;
         }
+        [Description("The Y position of the node"), Category("Locale")]
         public float Y
         {
             get;
             set;
         }
+        [Description("The Z position of the node"), Category("Locale")]
         public float Z
         {
             get;
             set;
         }
+        [Description("The rotation(In Degrees(0-359)) of the node"),Category("Locale")]
         public float Rot
         {
             get;
             set;
         }
+
+        [DefaultValue(typeof(float),"64.0f"), Description("The width(In pixels) of the node"),Category("Visuals")]
         public float W
         {
             get;
             set;
         }
+        //public float _W = 0;
+
+
+        [Description("The height(In pixels) of the node"),Category("Visuals"),DefaultValue(64.0f)]
         public float H
         {
             get;
             set;
         }
         
-      
+        public GraphNode Root
+        {
+            get;
+            set;
+        }
 
 
         public float[] XC = new float[4];
         public float[] YC = new float[4];
+        public Vector2[] DrawP = null;
 
         public void SyncCoords()
         {
 
-            int sw = StarKnightsEpisode1.App.StarKnightsAPP.W;
-            int sh = StarKnightsEpisode1.App.StarKnightsAPP.H;
+            int sw = StarEngine.App.StarApp.W;
+            int sh = StarEngine.App.StarApp.H;
 
             float[] ox = new float[4];
             float[] oy = new float[4];
@@ -84,6 +158,8 @@ namespace StarKnightsEpisode1.Scene
 
             p = Maths.Push(p, sw / 2, sh / 2);
 
+            DrawP = p;
+
             //p = Maths.Push(p, X, Y);
 
             //p = Maths.Push(p,sw / 2, sh / 2);
@@ -92,7 +168,7 @@ namespace StarKnightsEpisode1.Scene
 
 
 
-            Draw.Render.Image(p, ImgFrame);
+           // Draw.Render.Image(p, ImgFrame);
 
 
 
@@ -107,15 +183,83 @@ namespace StarKnightsEpisode1.Scene
 
         public GraphNode()
         {
-            X = 0;
-            Y = 0;
+            W = 64;
+            H = 64;
             Z = 1.0f;
-            W = 0;
-            H = 0;
-            Rot = 0;
-            ImgFrame = null;
+            Nodes = new List<GraphNode>();
         }
-        
+
+        public void Translate(float x, float y, float z = 0.0f)
+        {
+
+            X = X + x;
+            Y = Y + y;
+            Z = Z + z;
+
+        }
+
+        public void Move(float x,float y,float z=0.0f)
+        {
+            var r = Util.Maths.Rotate(x, y, 360-Rot, 1.0f);
+            X = X + r.X;
+            Y = Y - r.Y;
+            Z = Z + z;
+
+        }
+
+        public void Point(float x,float y)
+        {
+
+            var r = Math.Atan2(y, x);
+            Rot = (float)r * (180.0f / (float)Math.PI);
+
+
+        }
+
+        public void SetPos(float x,float y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public void SetZ(float z)
+        {
+            Z = z;
+        }
+
+        public void Rotate(float r)
+        {
+            Rot = Rot - r;
+            if (Rot < 0) Rot = 360.0f + Rot;
+            if (Rot > 360) Rot = Rot - 360.0f;
+        }
+
+        public void SetRotate(float r)
+        {
+            Rot = r;
+        }
+
+        public GraphNode Node
+        {
+            get;
+            set;
+        }
+
+      
+        public virtual void Init()
+        {
+
+        }
+
+        public virtual void Update()
+        {
+
+        }
+
+        public virtual void Draw()
+        {
+
+        }
 
     }
 }

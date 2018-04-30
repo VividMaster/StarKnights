@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StarKnightsEpisode1.FX;
-using StarKnightsEpisode1.Scene;
-using StarKnightsEpisode1.Util;
-namespace StarKnightsEpisode1.FXS
+using StarEngine.FX;
+using StarEngine.Scene;
+using StarEngine.Util;
+namespace StarEngine.FXS
 {
     public class FXLitImage : VEffect
     {
@@ -30,14 +30,14 @@ namespace StarKnightsEpisode1.FXS
         public override void SetPars()
         {
             float sw, sh;
-            sw = StarKnightsEpisode1.App.StarKnightsAPP.W;
-            sh = StarKnightsEpisode1.App.StarKnightsAPP.H;
+            sw = StarEngine.App.StarApp.W;
+            sh = StarEngine.App.StarApp.H;
             float px, py, pz;
 
             // px = Light.X + Graph.X;
             // py = Light.Y + Graph.Y;
-            px = Light.X;
-            py = Light.Y;
+            px = Light.X * Graph.Z;
+            py = Light.Y * Graph.Z;
 
             //px = (sw / 2) + px;
             //py = (sh / 2) + py;
@@ -59,8 +59,8 @@ namespace StarKnightsEpisode1.FXS
             SetVec3("lSpec", Light.Specular);
             SetFloat("lShiny", Light.Shiny);
             SetFloat("lRange", Light.Range * Graph.Z);
-            SetFloat("sWidth", StarKnightsEpisode1.App.StarKnightsAPP.W);
-            SetFloat("sHeight", StarKnightsEpisode1.App.StarKnightsAPP.H);
+            SetFloat("sWidth", StarEngine.App.StarApp.W);
+            SetFloat("sHeight", StarEngine.App.StarApp.H);
 
         }
     }

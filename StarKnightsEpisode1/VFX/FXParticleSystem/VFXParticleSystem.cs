@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarKnightsEpisode1.VFX
+namespace StarEngine.VFX
 {
     public class VFXParticleSystem : VFXBase
     {
 
-        public List<FXParticleSystem.ParticleBase> Particles
+        public List<ParticleBase> Particles
         {
             get;
             set;
         }
 
-        public List<FXParticleSystem.ParticleBase> Bases
+        public List<ParticleBase> Bases
         {
             get;
             set;
         }
 
-        public List<FXParticleSystem.ParticleBase> Removes
+        public List<ParticleBase> Removes
         {
             get;
             set;
@@ -148,9 +148,9 @@ namespace StarKnightsEpisode1.VFX
         public VFXParticleSystem()
         {
 
-            Particles = new List<FXParticleSystem.ParticleBase>();
-            Bases = new List<FXParticleSystem.ParticleBase>();
-            Removes = new List<FXParticleSystem.ParticleBase>();
+            Particles = new List<ParticleBase>();
+            Bases = new List<ParticleBase>();
+            Removes = new List<ParticleBase>();
             SpawnRot1 = 0;
             SpawnRot2 = 359;
             SpawnZSmall = -0.25f;
@@ -233,14 +233,14 @@ namespace StarKnightsEpisode1.VFX
 
         }
 
-        public void Remove(FXParticleSystem.ParticleBase particle)
+        public void Remove(ParticleBase particle)
         {
 
             Removes.Add(particle);
 
         }
 
-        public void AddBase(FXParticleSystem.ParticleBase pbase)
+        public void AddBase(ParticleBase pbase)
         {
 
             Bases.Add(pbase);

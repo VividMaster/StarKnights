@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-namespace StarKnightsEpisode1.Util
+namespace StarEngine.Util
 {
     public static class Maths
     {

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC1BE8BE-138F-4474-8D07-B8215CB52DDC}</ProjectGuid>
+    <ProjectGuid>{00946076-F391-4238-B164-0E6A72D038C5}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>StarKnightsEpisode1</RootNamespace>
-    <AssemblyName>StarKnightsEpisode1</AssemblyName>
+    <RootNamespace>StarKnightsOne</RootNamespace>
+    <AssemblyName>StarKnightsOne</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,32 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
+      <HintPath>..\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>packages\OpenTK.3.0.0-pre\lib\net20\OpenTK.dll</HintPath>
+      <HintPath>..\packages\OpenTK.3.0.0-pre\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,31 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\AppLog.cs" />
-    <Compile Include="Draw\Render.cs" />
-    <Compile Include="FXS\FXLitImage.cs" />
-    <Compile Include="FX\FXG.cs" />
-    <Compile Include="FX\VEffect.cs" />
-    <Compile Include="Math\Maths.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="App\StarKnightsAPP.cs" />
-    <Compile Include="Scene\GraphLight.cs" />
-    <Compile Include="Scene\GraphSprite.cs" />
-    <Compile Include="Scene\SceneGraph.cs" />
-    <Compile Include="Scene\GraphNode.cs" />
-    <Compile Include="Tex\Tex2D.cs" />
-    <Compile Include="Tex\TexBase.cs" />
-    <Compile Include="VFX\FXParticleSystem\ParticleBase.cs" />
-    <Compile Include="VFX\FXParticleSystem\SoftParticle.cs" />
-    <Compile Include="VFX\VFXBase.cs" />
-    <Compile Include="VFX\FXParticleSystem\VFXParticleSystem.cs" />
-    <Compile Include="VFX\VisualFX.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StarEngine.csproj">
+      <Project>{cc1be8be-138f-4474-8d07-b8215cb52ddc}</Project>
+      <Name>StarEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

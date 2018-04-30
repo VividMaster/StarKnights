@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using StarKnightsEpisode1.App;
-using StarKnightsEpisode1.Tex;
+using StarEngine.App;
+using StarEngine.Tex;
 
 
 
-namespace StarKnightsEpisode1.Draw
+namespace StarEngine.Draw
 {
     public enum BlendMode
     {
@@ -24,7 +24,7 @@ namespace StarKnightsEpisode1.Draw
         public static void To2D()
         {
 
-            var pm = Matrix4.CreateOrthographicOffCenter(0, StarKnightsEpisode1.App.StarKnightsAPP.RW,StarKnightsAPP.RH,0, 0, 1);
+            var pm = Matrix4.CreateOrthographicOffCenter(0, StarEngine.App.StarApp.RW,StarApp.RH,0, 0, 1);
 
             //pm = Matrix4.CreateOrthographic(StarKnightsAPP.RW, StarKnightsAPP.RH, 0, 1);
 

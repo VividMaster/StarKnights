@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarKnightsEpisode1.Scene
+namespace StarEngine.Scene
 {
     public class GraphSprite : GraphNode
     {
