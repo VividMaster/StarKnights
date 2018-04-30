@@ -185,6 +185,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CinePlugins\CinePlugins.csproj">
+      <Project>{3d93ff7b-12bf-46c3-bb58-133473e83c89}</Project>
+      <Name>CinePlugins</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StarEngine.csproj">
       <Project>{cc1be8be-138f-4474-8d07-b8215cb52ddc}</Project>
       <Name>StarEngine</Name>

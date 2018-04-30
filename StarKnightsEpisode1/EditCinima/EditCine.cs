@@ -21,6 +21,7 @@ using StarEngine.Util;
 using StarEngine.VFX;
 using StarEngine.Script;
 using StarEngine.Reflect;
+using System.Reflection;
 namespace EditCinima
 {
     public partial class EditCine : Form
@@ -36,6 +37,8 @@ namespace EditCinima
         public static EditCine Main = null;
         public static string DefScript;
         public ScriptName ChooseScriptNAme = null;
+        public List<CinePlugins.CinePlugin> Plugins = new List<CinePlugins.CinePlugin>();
+
         public void LoadDefaults()
         {
             DefScript = System.IO.File.ReadAllText("res/defaultScript.cs");
@@ -175,9 +178,87 @@ namespace EditCinima
             var ci = new ClassIO(EditGraph);
             ci.Copy();
             Console.WriteLine("Done.");
+            LoadPlugins();
+            InitPlugins();
 
         }
 
+        public void InitPlugins()
+        {
+
+            foreach(var p in Plugins)
+            {
+                Console.WriteLine("Obtaining plugin UI:" + p.GetName());
+                var pc = p.GetUI();
+                var tb = new TabPage(p.GetName());
+                pc.Dock = DockStyle.Fill;
+                tb.Controls.Add(pc);
+                UI2.TabPages.Add(tb);
+
+
+            }
+
+        }
+
+        public void LoadPlugins()
+        {
+            Console.WriteLine("Scanning plugins.");
+            foreach(var pf in new DirectoryInfo("Plugins").GetDirectories())
+            {
+                var full = "Plugins/" + pf.Name + "/" + pf.Name + ".dll";
+                Console.WriteLine("Loading plugin:" + pf.Name + " FullPath:" + full);
+                LoadPlugin(full,pf.Name.Replace(".dll",""));
+            }
+            Console.WriteLine("Plugins loaded.");
+        }
+        public void LoadPlugin(string path,string name)
+        {
+            var asm = Assembly.LoadFrom(path);
+            Console.WriteLine("Loaded Asm:" + asm.FullName);
+            foreach(var tp in asm.GetTypes())
+            {
+                Console.WriteLine("Found Type:" + tp.Name);
+            }
+            Console.WriteLine("Obtaining Type:" + name + ".PluginEntry");
+
+            var et = asm.GetType(name + ".PluginEntry");
+            MethodInfo gp = et.GetMethod("GetPlugin");
+            Console.WriteLine("Done:" + gp.Name);
+            Console.WriteLine("Static:" + gp.IsStatic);
+
+            var pi = gp.Invoke(null, null);
+            Console.WriteLine("Got Plugin:" + pi.GetType().FullName);
+
+            Plugins.Add(pi as CinePlugins.CinePlugin);
+           
+
+
+
+            /*
+            var et = asm.GetType(name + ".PluginEntry").GetConstructor(Type.EmptyTypes);
+            var nt = et.Invoke(null);
+
+            Console.WriteLine("Succesfull.");
+            var em = nt.GetType().GetMethod("GetPlugin");
+
+            Console.WriteLine("GetPluginName:" + em.FullName);
+            
+            Console.WriteLine("Getting entry method.");
+            var plug = em.Invoke(em, null);
+            Console.WriteLine("Done.");
+
+            var pi = plug as CinePlugins.CinePlugin;
+
+            Console.WriteLine("PluginReturnedName:" + pi.GetName());
+            */
+
+
+
+
+            Console.WriteLine("Plugin scanned.");
+
+
+        }
         private void EditCine_Resize(object sender, EventArgs e)
         {
             ResizeUI();

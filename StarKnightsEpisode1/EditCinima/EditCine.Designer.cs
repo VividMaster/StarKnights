@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Scene");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Scene");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.CineMenu = new System.Windows.Forms.MenuStrip();
@@ -42,6 +42,11 @@
             this.SceneTree = new System.Windows.Forms.TreeView();
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.Visual = new StarEngine.App.StarControl();
+            this.UI2 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.BStopGame = new System.Windows.Forms.Button();
+            this.BRunGame = new System.Windows.Forms.Button();
             this.UpdateTick = new System.Windows.Forms.Timer(this.components);
             this.SceneTreeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SMRename = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,12 +55,6 @@
             this.SMNewScript = new System.Windows.Forms.ToolStripMenuItem();
             this.SMLoadScript = new System.Windows.Forms.ToolStripMenuItem();
             this.BrowseFile = new System.Windows.Forms.OpenFileDialog();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.BRunGame = new System.Windows.Forms.Button();
-            this.BStopGame = new System.Windows.Forms.Button();
-            this.Visual = new StarEngine.App.StarControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -73,9 +72,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.SceneTreeMenu.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.UI2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.SceneTreeMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -190,10 +189,10 @@
             this.SceneTree.LabelEdit = true;
             this.SceneTree.Location = new System.Drawing.Point(0, 0);
             this.SceneTree.Name = "SceneTree";
-            treeNode1.Name = "SceneRoot";
-            treeNode1.Text = "Scene";
+            treeNode2.Name = "SceneRoot";
+            treeNode2.Text = "Scene";
             this.SceneTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.SceneTree.Size = new System.Drawing.Size(264, 266);
             this.SceneTree.TabIndex = 1;
             this.SceneTree.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.SceneTree_BeforeLabelEdit);
@@ -225,10 +224,66 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer2.Panel2.Controls.Add(this.UI2);
             this.splitContainer2.Size = new System.Drawing.Size(1012, 616);
             this.splitContainer2.SplitterDistance = 330;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // Visual
+            // 
+            this.Visual.BackColor = System.Drawing.Color.Black;
+            this.Visual.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Visual.Location = new System.Drawing.Point(0, 0);
+            this.Visual.Name = "Visual";
+            this.Visual.Size = new System.Drawing.Size(1008, 326);
+            this.Visual.TabIndex = 0;
+            this.Visual.VSync = false;
+            this.Visual.Load += new System.EventHandler(this.starControl1_Load);
+            this.Visual.Paint += new System.Windows.Forms.PaintEventHandler(this.Visual_Paint_1);
+            this.Visual.Resize += new System.EventHandler(this.Visual_Resize_1);
+            // 
+            // UI2
+            // 
+            this.UI2.Controls.Add(this.tabPage1);
+            this.UI2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UI2.Location = new System.Drawing.Point(0, 0);
+            this.UI2.Name = "UI2";
+            this.UI2.SelectedIndex = 0;
+            this.UI2.Size = new System.Drawing.Size(1008, 278);
+            this.UI2.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.BStopGame);
+            this.tabPage1.Controls.Add(this.BRunGame);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1000, 252);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Game";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // BStopGame
+            // 
+            this.BStopGame.Enabled = false;
+            this.BStopGame.Location = new System.Drawing.Point(127, 7);
+            this.BStopGame.Name = "BStopGame";
+            this.BStopGame.Size = new System.Drawing.Size(114, 23);
+            this.BStopGame.TabIndex = 1;
+            this.BStopGame.Text = "Stop Game";
+            this.BStopGame.UseVisualStyleBackColor = true;
+            this.BStopGame.Click += new System.EventHandler(this.BStopGame_Click);
+            // 
+            // BRunGame
+            // 
+            this.BRunGame.Location = new System.Drawing.Point(7, 7);
+            this.BRunGame.Name = "BRunGame";
+            this.BRunGame.Size = new System.Drawing.Size(114, 23);
+            this.BRunGame.TabIndex = 0;
+            this.BRunGame.Text = "Run Game";
+            this.BRunGame.UseVisualStyleBackColor = true;
+            this.BRunGame.Click += new System.EventHandler(this.button1_Click);
             // 
             // UpdateTick
             // 
@@ -283,73 +338,6 @@
             // 
             this.BrowseFile.DefaultExt = "cs";
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1008, 278);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.BStopGame);
-            this.tabPage1.Controls.Add(this.BRunGame);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1000, 252);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Game";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1000, 252);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // BRunGame
-            // 
-            this.BRunGame.Location = new System.Drawing.Point(7, 7);
-            this.BRunGame.Name = "BRunGame";
-            this.BRunGame.Size = new System.Drawing.Size(114, 23);
-            this.BRunGame.TabIndex = 0;
-            this.BRunGame.Text = "Run Game";
-            this.BRunGame.UseVisualStyleBackColor = true;
-            this.BRunGame.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // BStopGame
-            // 
-            this.BStopGame.Enabled = false;
-            this.BStopGame.Location = new System.Drawing.Point(127, 7);
-            this.BStopGame.Name = "BStopGame";
-            this.BStopGame.Size = new System.Drawing.Size(114, 23);
-            this.BStopGame.TabIndex = 1;
-            this.BStopGame.Text = "Stop Game";
-            this.BStopGame.UseVisualStyleBackColor = true;
-            this.BStopGame.Click += new System.EventHandler(this.BStopGame_Click);
-            // 
-            // Visual
-            // 
-            this.Visual.BackColor = System.Drawing.Color.Black;
-            this.Visual.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Visual.Location = new System.Drawing.Point(0, 0);
-            this.Visual.Name = "Visual";
-            this.Visual.Size = new System.Drawing.Size(1008, 326);
-            this.Visual.TabIndex = 0;
-            this.Visual.VSync = false;
-            this.Visual.Load += new System.EventHandler(this.starControl1_Load);
-            this.Visual.Paint += new System.Windows.Forms.PaintEventHandler(this.Visual_Paint_1);
-            this.Visual.Resize += new System.EventHandler(this.Visual_Resize_1);
-            // 
             // EditCine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -380,9 +368,9 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.SceneTreeMenu.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.UI2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.SceneTreeMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -410,11 +398,10 @@
         private System.Windows.Forms.ToolStripMenuItem SMNewScript;
         private System.Windows.Forms.ToolStripMenuItem SMLoadScript;
         private System.Windows.Forms.OpenFileDialog BrowseFile;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl UI2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button BStopGame;
         private System.Windows.Forms.Button BRunGame;
-        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
