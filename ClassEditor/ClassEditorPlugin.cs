@@ -6,34 +6,37 @@ using System.Threading.Tasks;
 using CinePlugins;
 using System.Windows;
 using System.Windows.Forms;
-namespace EntityEditor
+
+namespace ClassEditor
 {
-    public class EntityEditorPlugin : CinePlugin
+    public class ClassEditorPlugin : CinePlugin
     {
 
         public override Control GetUI()
         {
-            return new EntityEditorControl();
+            return new ClassEditorControl();
         }
 
         public override string GetName()
         {
-            return "EntityEditorPlugin";
+            return "ClassEditorPlugin";
         }
 
     }
 
-    public class AnimEditorPlugin : CinePlugin
+    public class ClassInspectorPlugin : CinePlugin
     {
 
         public override Control GetUI()
         {
-            return new AnimEditorControl();
+
+            return new ClassInspectorControl();
+           
         }
 
         public override string GetName()
         {
-            return "AnimEditorPlugin";
+            return "ClassInspectorPlugin";
         }
 
     }
@@ -44,14 +47,15 @@ namespace EntityEditor
         public static CinePlugin[] GetPlugin()
         {
 
-            CinePlugin[] pr = new CinePlugin[2];
-            pr[0] = new EntityEditorPlugin();
-            pr[1] = new AnimEditorPlugin();
-            return pr;
+            return PluginArray(new ClassEditorPlugin(), new ClassInspectorPlugin());
 
+        }
+
+        public static CinePlugin[] PluginArray(params CinePlugin[] plugs)
+        {
+            return plugs;
         }
 
 
     }
-
 }

@@ -32,6 +32,7 @@ namespace EditCinima
             SceneTree.ContextMenuStrip = SceneTreeMenu;
             LoadDefaults();
             Main = this;
+            DoubleBuffered = true;
             //Visual.ResizeGL();
         }
         public static EditCine Main = null;
@@ -229,8 +230,11 @@ namespace EditCinima
             var pi = gp.Invoke(null, null);
             Console.WriteLine("Got Plugin:" + pi.GetType().FullName);
 
-            Plugins.Add(pi as CinePlugins.CinePlugin);
-           
+            var pa = pi as CinePlugins.CinePlugin[];
+            foreach (var pp in pa)
+            {
+                Plugins.Add(pp);
+            }
 
 
 

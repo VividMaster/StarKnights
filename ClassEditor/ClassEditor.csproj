@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{93172C48-8CBD-4269-A5AC-D42C7512769F}</ProjectGuid>
+    <ProjectGuid>{2B63C761-903C-45AF-AEB7-6B6FEF5B417D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EntityEditor</RootNamespace>
-    <AssemblyName>EntityEditor</AssemblyName>
+    <RootNamespace>ClassEditor</RootNamespace>
+    <AssemblyName>ClassEditor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\EditCinima\bin\Debug\Plugins\EntityEditor\</OutputPath>
+    <OutputPath>..\StarKnightsEpisode1\EditCinima\bin\Debug\Plugins\ClassEditor\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,13 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StarControls">
+      <HintPath>..\StarKnightsEpisode1\StarControls\obj\Debug\StarControls.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Workflow.ComponentModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,54 +45,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimEditorControl.cs">
+    <Compile Include="Class1.cs" />
+    <Compile Include="ClassEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AnimEditorControl.Designer.cs">
-      <DependentUpon>AnimEditorControl.cs</DependentUpon>
+    <Compile Include="ClassEditorControl.Designer.cs">
+      <DependentUpon>ClassEditorControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="EntityEditorPlugin.cs" />
-    <Compile Include="EntityEditorControl.cs">
+    <Compile Include="ClassEditorPlugin.cs" />
+    <Compile Include="ClassInspectorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EntityEditorControl.Designer.cs">
-      <DependentUpon>EntityEditorControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetAnimName.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GetAnimName.Designer.cs">
-      <DependentUpon>GetAnimName.cs</DependentUpon>
+    <Compile Include="ClassInspectorControl.Designer.cs">
+      <DependentUpon>ClassInspectorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StarKnightGameplay\StarKnightGameplay.csproj">
+    <ProjectReference Include="..\StarKnightGameplay\StarKnightGameplay.csproj">
       <Project>{e37bc530-6d65-4eb2-9ec1-f0963d0804a8}</Project>
       <Name>StarKnightGameplay</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CinePlugins\CinePlugins.csproj">
+    <ProjectReference Include="..\StarKnightsEpisode1\CinePlugins\CinePlugins.csproj">
       <Project>{3d93ff7b-12bf-46c3-bb58-133473e83c89}</Project>
       <Name>CinePlugins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StarControls\StarControls.csproj">
-      <Project>{b4ea93b9-882d-4bc3-8b12-8f073ea9b704}</Project>
-      <Name>StarControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StarEngine.csproj">
+    <ProjectReference Include="..\StarKnightsEpisode1\StarEngine.csproj">
       <Project>{cc1be8be-138f-4474-8d07-b8215cb52ddc}</Project>
       <Name>StarEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AnimEditorControl.resx">
-      <DependentUpon>AnimEditorControl.cs</DependentUpon>
+    <EmbeddedResource Include="ClassEditorControl.resx">
+      <DependentUpon>ClassEditorControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EntityEditorControl.resx">
-      <DependentUpon>EntityEditorControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GetAnimName.resx">
-      <DependentUpon>GetAnimName.cs</DependentUpon>
+    <EmbeddedResource Include="ClassInspectorControl.resx">
+      <DependentUpon>ClassInspectorControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
