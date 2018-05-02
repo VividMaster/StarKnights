@@ -39,7 +39,7 @@ namespace EditCinima
         public static string DefScript;
         public ScriptName ChooseScriptNAme = null;
         public List<CinePlugins.CinePlugin> Plugins = new List<CinePlugins.CinePlugin>();
-
+        public Tex2D MoveIcon, RotateIcon;
         public void LoadDefaults()
         {
             DefScript = System.IO.File.ReadAllText("res/defaultScript.cs");
@@ -181,7 +181,8 @@ namespace EditCinima
             Console.WriteLine("Done.");
             LoadPlugins();
             InitPlugins();
-
+            MoveIcon = new Tex2D("Data/Icons/MoveIcon.png", true);
+            RotateIcon = new Tex2D("Data/Icons/RotateIcon.png", true);
         }
 
         public void InitPlugins()

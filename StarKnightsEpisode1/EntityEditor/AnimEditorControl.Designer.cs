@@ -32,13 +32,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.starButton1 = new StarControls.StarButton();
             this.starButton2 = new StarControls.StarButton();
-            this.starButton3 = new StarControls.StarButton();
             this.starButton4 = new StarControls.StarButton();
             this.AnimSelectBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.AnimFramesView = new System.Windows.Forms.ListView();
             this.starButton5 = new StarControls.StarButton();
             this.BrowseFile = new System.Windows.Forms.OpenFileDialog();
+            this.SetBox = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AnimBox
@@ -74,14 +75,7 @@
             this.starButton2.Name = "starButton2";
             this.starButton2.Size = new System.Drawing.Size(113, 23);
             this.starButton2.TabIndex = 3;
-            // 
-            // starButton3
-            // 
-            this.starButton3.ButText = "Load";
-            this.starButton3.Location = new System.Drawing.Point(474, 70);
-            this.starButton3.Name = "starButton3";
-            this.starButton3.Size = new System.Drawing.Size(113, 23);
-            this.starButton3.TabIndex = 4;
+            this.starButton2.ClickButton += new System.EventHandler(this.starButton2_ClickButton);
             // 
             // starButton4
             // 
@@ -99,6 +93,7 @@
             this.AnimSelectBox.Name = "AnimSelectBox";
             this.AnimSelectBox.Size = new System.Drawing.Size(159, 21);
             this.AnimSelectBox.TabIndex = 6;
+            this.AnimSelectBox.SelectedIndexChanged += new System.EventHandler(this.AnimSelectBox_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -120,7 +115,7 @@
             // starButton5
             // 
             this.starButton5.ButText = "Add Frame";
-            this.starButton5.Location = new System.Drawing.Point(351, 281);
+            this.starButton5.Location = new System.Drawing.Point(351, 72);
             this.starButton5.Name = "starButton5";
             this.starButton5.Size = new System.Drawing.Size(113, 23);
             this.starButton5.TabIndex = 9;
@@ -130,16 +125,35 @@
             // 
             this.BrowseFile.Multiselect = true;
             // 
+            // SetBox
+            // 
+            this.SetBox.FormattingEnabled = true;
+            this.SetBox.Location = new System.Drawing.Point(419, 131);
+            this.SetBox.Name = "SetBox";
+            this.SetBox.Size = new System.Drawing.Size(197, 173);
+            this.SetBox.TabIndex = 10;
+            this.SetBox.SelectedIndexChanged += new System.EventHandler(this.SetBox_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(373, 131);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(28, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Sets";
+            // 
             // AnimEditorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.SetBox);
             this.Controls.Add(this.starButton5);
             this.Controls.Add(this.AnimFramesView);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.AnimSelectBox);
             this.Controls.Add(this.starButton4);
-            this.Controls.Add(this.starButton3);
             this.Controls.Add(this.starButton2);
             this.Controls.Add(this.starButton1);
             this.Controls.Add(this.label1);
@@ -157,12 +171,13 @@
         private System.Windows.Forms.Label label1;
         private StarControls.StarButton starButton1;
         private StarControls.StarButton starButton2;
-        private StarControls.StarButton starButton3;
         private StarControls.StarButton starButton4;
         private System.Windows.Forms.ComboBox AnimSelectBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView AnimFramesView;
         private StarControls.StarButton starButton5;
         private System.Windows.Forms.OpenFileDialog BrowseFile;
+        private System.Windows.Forms.ListBox SetBox;
+        private System.Windows.Forms.Label label3;
     }
 }

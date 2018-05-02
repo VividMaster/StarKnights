@@ -17,6 +17,16 @@ namespace EntityEditor
             InitializeComponent();
             Main = this;
             NewAnim();
+            SyncSets();
+        }
+        public void SyncSets()
+        {
+            GameInfo.ScanAnimSets();
+            SetBox.Items.Clear();
+            foreach(var a in GameInfo.AnimSets)
+            {
+                SetBox.Items.Add(a);
+            }
         }
         public Animation EditAnim = null;
         public AnimationSet EditSet = null;
@@ -38,6 +48,7 @@ namespace EntityEditor
         public void SelectAnim(int i)
         {
             AnimSelectBox.SelectedIndex = i;
+            EditAnim = EditSet.Anims[i];
             SyncFrames();
         }
         public void SyncFrames()
@@ -82,7 +93,51 @@ namespace EntityEditor
                 
             }
             SyncFrames();
+            SyncAnimBox();
+        }
+        public void SyncAnimBox()
+        {
+            int ia = AnimSelectBox.SelectedIndex;
+            AnimSelectBox.Items.Clear();
+            foreach(var a in EditSet.Anims)
+            {
+                AnimSelectBox.Items.Add(a);
+            }
+            AnimSelectBox.SelectedIndex = ia;
+        }
 
+        private void starButton2_ClickButton(object sender, EventArgs e)
+        {
+            EditSet.Save();
+        }
+
+        private void starButton3_ClickButton(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void SetBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var aa = GameInfo.AnimSets[SetBox.SelectedIndex];
+        
+            aa.Load();
+            AnimBox.Text = aa.Name;
+
+            EditSet = aa;
+            AnimSelectBox.Items.Clear();
+            foreach(var a2 in aa.Anims)
+            {
+                AnimSelectBox.Items.Add(a2);
+            }
+            SelectAnim(0);
+            SyncFrames();
+
+        }
+
+        private void AnimSelectBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectAnim(AnimSelectBox.SelectedIndex);
+            SyncFrames();
         }
     }
 }

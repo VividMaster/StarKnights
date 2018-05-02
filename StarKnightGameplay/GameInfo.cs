@@ -11,7 +11,7 @@ namespace StarKnightGameplay
 
         public static List<CharClass> Classes = new List<CharClass>();
         public static List<Entity> Entities = new List<Entity>();
-
+        public static List<AnimationSet> AnimSets = new List<AnimationSet>();
         public static void LoadClasses()
         {
 
@@ -27,6 +27,18 @@ namespace StarKnightGameplay
             }
 
         }
+        public static void ScanAnimSets()
+        {
 
+            AnimSets.Clear();
+            var af = new DirectoryInfo("Data/AnimationSets/").GetDirectories();
+            foreach(var f in af)
+            {
+                var aa = new AnimationSet();
+                aa.Name = f.Name;
+                AnimSets.Add(aa);
+            }
+
+        }
     }
 }
