@@ -39,7 +39,7 @@ namespace EditCinima
         public static string DefScript;
         public ScriptName ChooseScriptNAme = null;
         public List<CinePlugins.CinePlugin> Plugins = new List<CinePlugins.CinePlugin>();
-        public Tex2D MoveIcon, RotateIcon;
+        public Tex2D MoveIcon, RotateIcon, ScaleIcon, LightIcon;
         public void LoadDefaults()
         {
             DefScript = System.IO.File.ReadAllText("res/defaultScript.cs");
@@ -69,6 +69,29 @@ namespace EditCinima
         {
             Visual.Invalidate();
             EditGraph.Update();
+            if (ShowIcons)
+            {
+                if (IconsAlpha < 1.0f)
+                {
+                    IconsAlpha = IconsAlpha + 0.04f;
+                }
+                else
+                {
+                    IconsAlpha = 1.0f;
+                }
+
+            }
+            else
+            {
+                if (IconsAlpha > 0.0f)
+                {
+                    IconsAlpha = IconsAlpha - 0.08f;
+                }
+                else
+                {
+                    IconsAlpha = 0.0f;
+                }
+            }
         }
 
         private void Visual_Paint(object sender, PaintEventArgs e)
@@ -183,6 +206,9 @@ namespace EditCinima
             InitPlugins();
             MoveIcon = new Tex2D("Data/Icons/MoveIcon.png", true);
             RotateIcon = new Tex2D("Data/Icons/RotateIcon.png", true);
+            ScaleIcon = new Tex2D("Data/Icons/ScaleIcon.png", true);
+            LightIcon = new Tex2D("Data/Icons/LightIcon.png", true);
+            Visual.ContextMenuStrip  = EditMenu;
         }
 
         public void InitPlugins()
@@ -304,9 +330,54 @@ namespace EditCinima
 
             EditGraph.Draw();
 
+            if (ShowIcons || IconsAlpha > 0.0f) 
+            {
+                Render.Col = new OpenTK.Vector4(1, 1, 1, IconsAlpha);
+                Render.SetBlend(BlendMode.Alpha);
+                if (MoveOn)
+                {
+                    Render.Col = new OpenTK.Vector4(0.5f, 0.5f, 0.5f, 0.5f*IconsAlpha);
+                    Render.Rect(20, 20, 32, 32);
+                }
+                Render.Col = new OpenTK.Vector4(1, 1, 1, IconsAlpha);
+                    Render.Image(20, 20, 32, 32, MoveIcon);
+                if (RotateOn)
+                {
+                    Render.Col = new OpenTK.Vector4(0.5f, 0.5f, 0.5f, 0.5f*IconsAlpha);
+                    Render.Rect(65, 20, 32, 32);
+                }
+                Render.Col = new OpenTK.Vector4(1, 1, 1, IconsAlpha);
+                    Render.Image(65, 20, 32, 32, RotateIcon);
+
+                if (ScaleOn)
+                {
+                    Render.Col = new OpenTK.Vector4(0.5f, 0.5f, 0.5f, 0.5f * IconsAlpha);
+                    Render.Rect(110, 20, 32, 32);
+                }
+                Render.Col = new OpenTK.Vector4(1, 1, 1, IconsAlpha);
+                Render.Image(110, 20, 32, 32, ScaleIcon);
+
+            }
+
+            Render.Col = new OpenTK.Vector4(1, 1, 1, 1);
+
+            switch (EditMode)
+            {
+                case 1:
+                    Render.Image(20, Visual.Height - 40, 32, 32, MoveIcon);
+                    break;
+                case 2:
+                    Render.Image(20, Visual.Height - 40, 32, 32, RotateIcon);
+                    break;
+                case 3:
+                    Render.Image(20, Visual.Height - 40, 32, 32, ScaleIcon);
+                    break;
+            }
+            
+
             Visual.Swap();
         }
-
+        public int EditMode = 0;
         private string oldNodeName = "";
         private TreeNode renameNode = null;
         private void SceneTree_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -480,6 +551,132 @@ namespace EditCinima
             BRunGame.Enabled = false;
             BStopGame.Enabled = true;
             EditGraph.Running = true;
+        }
+
+        public bool MoveOn = false, RotateOn = false, ScaleOn = false;
+        public bool ShowIcons = false;
+        public float IconsAlpha = 0.0f;
+        bool MouseIn = false;
+        float MXD, MYD;
+        private void Visual_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MouseIn = true;
+            }
+
+            if (MoveOn)
+            {
+                EditMode = 1;
+            }
+            if (RotateOn)
+            {
+                EditMode = 2;
+            }
+            if (ScaleOn)
+            {
+                EditMode = 3;
+            }
+                
+            var n = EditGraph.Pick(MX, MY);
+            EditNode = n;
+            PropGrid.SelectedObject = n;
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var lp = EditGraph.GetPoint(MX, MY);
+            var nl = new GraphLight();
+            nl.X = lp.X;
+            nl.Y = lp.Y;
+            nl.Z = 1.0f;
+            nl.ImgFrame = LightIcon;
+            nl.W = 32;
+            nl.H = 32;
+            EditGraph.Add(nl, true);
+        }
+
+        public int MX, MY;
+
+        private void Visual_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MouseIn = false;
+            }
+        }
+
+        private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditMode = 2;
+        }
+
+        private void moveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditMode = 1;
+        }
+
+        private void Visual_MouseMove(object sender, MouseEventArgs e)
+        {
+            MoveOn = false;
+            RotateOn = false;
+            if(e.Y<100)
+            {
+                ShowIcons = true;
+                if(e.X>20 && e.X < 52)
+                {
+                    if(e.Y>20 && e.Y < 52)
+                    {
+                        MoveOn = true;
+                        RotateOn = false;
+                        ScaleOn = false;
+                    }
+                }
+                if(e.X>65 && e.X < 97)
+                {
+                    if(e.Y>20 && e.Y < 52)
+                    {
+                        MoveOn = false;
+                        RotateOn = true;
+                        ScaleOn = false;
+                    }
+                }
+                if(e.X>110 && e.X < 142)
+                {
+                    if(e.Y>20 && e.Y < 52)
+                    {
+                        ScaleOn = true;
+                        RotateOn = false;
+                        MoveOn = false;
+
+                    }
+                }
+            }
+            else
+            {
+                ShowIcons = false;
+            }
+            MXD = e.X - MX;
+            MYD = e.Y - MY;
+            MX = e.X;
+            MY = e.Y;
+
+            if (MouseIn)
+            {
+                if (EditMode == 1)
+                {
+                    EditNode?.EditMove(MXD, MYD);
+                }
+                if (EditMode == 2)
+                {
+                    EditNode?.Rotate(MXD);
+                }
+                if(EditMode == 3)
+                {
+                    EditNode?.Scale(MYD*0.02f);
+                }
+            }
+            
         }
 
         private void BStopGame_Click(object sender, EventArgs e)

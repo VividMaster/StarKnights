@@ -128,6 +128,15 @@ namespace StarEngine.Scene
         public float[] YC = new float[4];
         public Vector2[] DrawP = null;
 
+        public void EditMove(float x,float y)
+        {
+
+            var r = Util.Maths.Rotate(x, y, Graph.Rot, 1.0f);
+            X = X + r.X;
+            Y = Y + r.Y;
+
+        }
+
         public void SyncCoords()
         {
 
@@ -229,11 +238,14 @@ namespace StarEngine.Scene
 
         public void Rotate(float r)
         {
-            Rot = Rot - r;
+            Rot = Rot + r;
             if (Rot < 0) Rot = 360.0f + Rot;
             if (Rot > 360) Rot = Rot - 360.0f;
         }
-
+        public void Scale(float z)
+        {
+            Z = Z + z;
+        }
         public void SetRotate(float r)
         {
             Rot = r;

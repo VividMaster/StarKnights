@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using StarEngine.Draw;
 using StarEngine.FXS;
 using StarEngine.Reflect;
+using OpenTK;
 namespace StarEngine.Scene
 {
     public class SceneGraph
@@ -131,10 +132,12 @@ namespace StarEngine.Scene
         }
 
 
-        public void Add(GraphLight node)
+        public void Add(GraphLight node, bool toGraph = false)
         {
+            Root.Nodes.Add(node);
             node.Graph = this;
             Lights.Add(node);
+            
         }
 
         public void Add(params GraphLight[] lights)
@@ -246,6 +249,55 @@ namespace StarEngine.Scene
         public void Draw()
         {
             DrawNode(Root);
+        }
+        float sign(Vector2 p1, Vector2 p2, Vector2 p3)
+        {
+            return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
+        }
+
+        bool PointInTriangle(Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3)
+        {
+            bool b1, b2, b3;
+
+            b1 = sign(pt, v1, v2) < 0.0f;
+            b2 = sign(pt, v2, v3) < 0.0f;
+            b3 = sign(pt, v3, v1) < 0.0f;
+
+            return ((b1 == b2) && (b2 == b3));
+        }
+        public GraphNode PickNode(GraphNode node,int x,int y)
+        {
+            foreach (var n in node.Nodes)
+            {
+                var p = PickNode(n,x,y);
+                if (p != null) return p;
+            }
+            if (node.DrawP != null)
+            {
+                if (PointInTriangle(new Vector2(x, y), node.DrawP[0], node.DrawP[1], node.DrawP[2]))
+                {
+                    return node;
+                }
+                else if (PointInTriangle(new Vector2(x, y), node.DrawP[2], node.DrawP[3], node.DrawP[0]))
+                {
+                    return node;
+                }
+            }
+            return null;
+
+        }
+        public GraphNode Pick(int x,int y)
+        {
+            return PickNode(Root,x,y);
+        }
+
+        public Vector2 GetPoint(float x,float y)
+        {
+            Vector2 r = new Vector2(x, y);
+            r = Util.Maths.Rotate(x, y, Rot, 1);
+            r.X = r.X + X;
+            r.Y = r.Y + y;
+            return r;
         }
 
     }
