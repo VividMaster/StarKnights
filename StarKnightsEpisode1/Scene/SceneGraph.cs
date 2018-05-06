@@ -134,7 +134,10 @@ namespace StarEngine.Scene
 
         public void Add(GraphLight node, bool toGraph = false)
         {
-            Root.Nodes.Add(node);
+            if (toGraph)
+            {
+                Root.Nodes.Add(node);
+            }
             node.Graph = this;
             Lights.Add(node);
             
@@ -293,10 +296,14 @@ namespace StarEngine.Scene
 
         public Vector2 GetPoint(float x,float y)
         {
+            int w, h;
+            w = App.StarApp.W;
+            h = App.StarApp.H;
             Vector2 r = new Vector2(x, y);
-            r = Util.Maths.Rotate(x, y, Rot, 1);
+            r = Util.Maths.Push(r, -w / 2, -h / 2);
+            r = Util.Maths.Rotate(r.X, r.Y, Rot, 1);
             r.X = r.X + X;
-            r.Y = r.Y + y;
+            r.Y = r.Y + Y;
             return r;
         }
 

@@ -190,6 +190,7 @@ namespace EditCinima
 
         private void EditCine_Load(object sender, EventArgs e)
         {
+            UpdateTick.Enabled = false;
             Visual.MakeCurrent();
             Visual.InitGL();
             NewScene();
@@ -197,7 +198,7 @@ namespace EditCinima
             ResizeUI();
             Console.WriteLine("Reflecting class.");
             Console.WriteLine(EditGraph == null ? "null" : "fine");
-
+            Visual.ContextMenuStrip = EditMenu;
 
             var ci = new ClassIO(EditGraph);
             ci.Copy();
@@ -208,7 +209,7 @@ namespace EditCinima
             RotateIcon = new Tex2D("Data/Icons/RotateIcon.png", true);
             ScaleIcon = new Tex2D("Data/Icons/ScaleIcon.png", true);
             LightIcon = new Tex2D("Data/Icons/LightIcon.png", true);
-            Visual.ContextMenuStrip  = EditMenu;
+            UpdateTick.Enabled = true;
         }
 
         public void InitPlugins()
@@ -297,6 +298,7 @@ namespace EditCinima
 
         private void ResizeUI()
         {
+            UpdateTick.Enabled = false;
          //   Console.WriteLine("VW:" + Visual.Width + " VH:" + Visual.Height);
        //     Visual.Size = new Size(Visual.Parent.Width, Visual.Parent.Height*2);
             StarApp.W = Visual.Width;
@@ -306,6 +308,7 @@ namespace EditCinima
             StarControl.W = Visual.Width;
             StarControl.H = Visual.Height;
             Visual.ResizeGL();
+            UpdateTick.Enabled = true;
         }
 
         private void starControl1_Load(object sender, EventArgs e)
@@ -585,15 +588,23 @@ namespace EditCinima
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+           
             var lp = EditGraph.GetPoint(MX, MY);
             var nl = new GraphLight();
-            nl.X = lp.X;
+            nl.X =lp.X;
             nl.Y = lp.Y;
             nl.Z = 1.0f;
+            if (LightIcon == null) Environment.Exit(1);
             nl.ImgFrame = LightIcon;
             nl.W = 32;
             nl.H = 32;
             EditGraph.Add(nl, true);
+            SyncUI();
+        }
+
+        private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         public int MX, MY;
@@ -689,6 +700,7 @@ namespace EditCinima
 
         private void SceneTree_DragDrop(object sender, DragEventArgs e)
         {
+            UpdateTick.Enabled = false;
             foreach (var f in dragFiles)
             {
                 var sn = new GraphSprite(f);
@@ -707,7 +719,7 @@ namespace EditCinima
                 }
             }
             SyncUI();
-            
+            UpdateTick.Enabled = true;
         }
     }
 }
