@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Scene");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Scene");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.CineMenu = new System.Windows.Forms.MenuStrip();
@@ -42,7 +42,6 @@
             this.SceneTree = new System.Windows.Forms.TreeView();
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.Visual = new StarEngine.App.StarControl();
             this.UI2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.BStopGame = new System.Windows.Forms.Button();
@@ -61,6 +60,8 @@
             this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Visual = new StarEngine.App.StarControl();
+            this.loadSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -135,7 +136,8 @@
             // 
             this.graphToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.graphToolStripMenuItem1,
-            this.newSceneToolStripMenuItem});
+            this.newSceneToolStripMenuItem,
+            this.loadSceneToolStripMenuItem});
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
             this.graphToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.graphToolStripMenuItem.Text = "Cine";
@@ -146,7 +148,7 @@
             this.newToolStripMenuItem,
             this.newSpriteToolStripMenuItem});
             this.graphToolStripMenuItem1.Name = "graphToolStripMenuItem1";
-            this.graphToolStripMenuItem1.Size = new System.Drawing.Size(132, 22);
+            this.graphToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.graphToolStripMenuItem1.Text = "Graph";
             // 
             // newToolStripMenuItem
@@ -166,7 +168,7 @@
             // newSceneToolStripMenuItem
             // 
             this.newSceneToolStripMenuItem.Name = "newSceneToolStripMenuItem";
-            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newSceneToolStripMenuItem.Text = "New Scene";
             this.newSceneToolStripMenuItem.Click += new System.EventHandler(this.newSceneToolStripMenuItem_Click);
             // 
@@ -196,10 +198,10 @@
             this.SceneTree.LabelEdit = true;
             this.SceneTree.Location = new System.Drawing.Point(0, 0);
             this.SceneTree.Name = "SceneTree";
-            treeNode2.Name = "SceneRoot";
-            treeNode2.Text = "Scene";
+            treeNode1.Name = "SceneRoot";
+            treeNode1.Text = "Scene";
             this.SceneTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode1});
             this.SceneTree.Size = new System.Drawing.Size(264, 266);
             this.SceneTree.TabIndex = 1;
             this.SceneTree.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.SceneTree_BeforeLabelEdit);
@@ -236,22 +238,6 @@
             this.splitContainer2.SplitterDistance = 330;
             this.splitContainer2.TabIndex = 0;
             // 
-            // Visual
-            // 
-            this.Visual.BackColor = System.Drawing.Color.Black;
-            this.Visual.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Visual.Location = new System.Drawing.Point(0, 0);
-            this.Visual.Name = "Visual";
-            this.Visual.Size = new System.Drawing.Size(1008, 326);
-            this.Visual.TabIndex = 0;
-            this.Visual.VSync = false;
-            this.Visual.Load += new System.EventHandler(this.starControl1_Load);
-            this.Visual.Paint += new System.Windows.Forms.PaintEventHandler(this.Visual_Paint_1);
-            this.Visual.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Visual_MouseDown);
-            this.Visual.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Visual_MouseMove);
-            this.Visual.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Visual_MouseUp);
-            this.Visual.Resize += new System.EventHandler(this.Visual_Resize_1);
-            // 
             // UI2
             // 
             this.UI2.Controls.Add(this.tabPage1);
@@ -261,6 +247,9 @@
             this.UI2.SelectedIndex = 0;
             this.UI2.Size = new System.Drawing.Size(1008, 278);
             this.UI2.TabIndex = 0;
+            this.UI2.DragEnter += new System.Windows.Forms.DragEventHandler(this.UI2_DragEnter);
+            this.UI2.DragOver += new System.Windows.Forms.DragEventHandler(this.UI2_DragOver);
+            this.UI2.DoubleClick += new System.EventHandler(this.UI2_DoubleClick);
             // 
             // tabPage1
             // 
@@ -361,35 +350,58 @@
             // moveToolStripMenuItem
             // 
             this.moveToolStripMenuItem.Name = "moveToolStripMenuItem";
-            this.moveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.moveToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.moveToolStripMenuItem.Text = "Move";
             this.moveToolStripMenuItem.Click += new System.EventHandler(this.moveToolStripMenuItem_Click);
             // 
             // rotateToolStripMenuItem
             // 
             this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.rotateToolStripMenuItem.Text = "Rotate";
             this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotateToolStripMenuItem_Click);
             // 
             // scaleToolStripMenuItem
             // 
             this.scaleToolStripMenuItem.Name = "scaleToolStripMenuItem";
-            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.scaleToolStripMenuItem.Text = "Scale";
             this.scaleToolStripMenuItem.Click += new System.EventHandler(this.scaleToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(123, 6);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 22);
             this.toolStripMenuItem1.Text = "Add Light";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // Visual
+            // 
+            this.Visual.BackColor = System.Drawing.Color.Black;
+            this.Visual.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Visual.Location = new System.Drawing.Point(0, 0);
+            this.Visual.Name = "Visual";
+            this.Visual.Size = new System.Drawing.Size(1008, 326);
+            this.Visual.TabIndex = 0;
+            this.Visual.VSync = false;
+            this.Visual.Load += new System.EventHandler(this.starControl1_Load);
+            this.Visual.Paint += new System.Windows.Forms.PaintEventHandler(this.Visual_Paint_1);
+            this.Visual.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Visual_MouseDown);
+            this.Visual.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Visual_MouseMove);
+            this.Visual.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Visual_MouseUp);
+            this.Visual.Resize += new System.EventHandler(this.Visual_Resize_1);
+            // 
+            // loadSceneToolStripMenuItem
+            // 
+            this.loadSceneToolStripMenuItem.Name = "loadSceneToolStripMenuItem";
+            this.loadSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadSceneToolStripMenuItem.Text = "Load Scene";
+            this.loadSceneToolStripMenuItem.Click += new System.EventHandler(this.loadSceneToolStripMenuItem_Click);
             // 
             // EditCine
             // 
@@ -462,6 +474,7 @@
         private System.Windows.Forms.ToolStripMenuItem scaleToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem loadSceneToolStripMenuItem;
     }
 }
 

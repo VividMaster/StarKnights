@@ -47,15 +47,15 @@ namespace StarEngine.Draw
                     break;
                 case BlendMode.Alpha:
                     GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     break;
                 case BlendMode.Add:
                     GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+                    GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
                     break;
                 case BlendMode.SoftLight:
                     GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.One);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
                     break;
             }
         }

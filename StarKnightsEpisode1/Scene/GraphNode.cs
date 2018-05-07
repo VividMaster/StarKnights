@@ -7,6 +7,7 @@ using StarEngine.Util;
 using OpenTK;
 using StarEngine.Reflect;
 using System.ComponentModel;
+using System.IO;
 namespace StarEngine.Scene
 {
     
@@ -271,6 +272,56 @@ namespace StarEngine.Scene
         public virtual void Draw()
         {
 
+        }
+        public void Read(BinaryReader r)
+        {
+            X = r.ReadSingle();
+            Y = r.ReadSingle();
+            Z = r.ReadSingle();
+            Rot = r.ReadSingle();
+            Name = r.ReadString();
+            Console.WriteLine("Node:" + Name);
+            if (r.ReadBoolean())
+            {
+                bool alpha = r.ReadBoolean();
+                var tp = r.ReadString();
+                Console.WriteLine("TP:" + tp);
+                ImgFrame = new Tex.Tex2D(tp, alpha);
+            }
+            int nc = r.ReadInt32();
+            for(int i = 0; i < nc; i++)
+            {
+                var nn = new GraphNode();
+                //nn.Roo = this;
+
+                nn.Graph = Graph;
+                Nodes.Add(nn);
+                nn.Root = this;
+                nn.Read(r);
+            }
+        }
+        public void Write(BinaryWriter w)
+        {
+            w.Write(X);
+            w.Write(Y);
+            w.Write(Z);
+            w.Write(Rot);
+            w.Write(Name);
+            if (ImgFrame != null)
+            {
+                w.Write(true);
+                w.Write(ImgFrame.Alpha);
+                w.Write(ImgFrame.Path);
+            }
+            else
+            {
+                w.Write(false);
+            }
+            w.Write(Nodes.Count);
+            foreach(var n in Nodes)
+            {
+                n.Write(w);
+            }
         }
 
     }

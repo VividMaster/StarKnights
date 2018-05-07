@@ -22,6 +22,7 @@ using StarEngine.VFX;
 using StarEngine.Script;
 using StarEngine.Reflect;
 using System.Reflection;
+using StarEngine.Archive;
 namespace EditCinima
 {
     public partial class EditCine : Form
@@ -32,9 +33,17 @@ namespace EditCinima
             SceneTree.ContextMenuStrip = SceneTreeMenu;
             LoadDefaults();
             Main = this;
+            UIP = UI2;
             DoubleBuffered = true;
             //Visual.ResizeGL();
+            VFS = new VirtualFileSystem();
+            VFS.Update("Data/");
+            Console.WriteLine("VFS Enteries:" + VFS.Enteries.Count);
+            Console.WriteLine("VFS Size:" + VFS.Size);
+            VFS.Load("ship1.png", "Data/");
         }
+        public VirtualFileSystem VFS;
+        public static TabControl UIP;
         public static EditCine Main = null;
         public static string DefScript;
         public ScriptName ChooseScriptNAme = null;
@@ -67,6 +76,7 @@ namespace EditCinima
 
         private void UpdateTick_Tick(object sender, EventArgs e)
         {
+            if (render) return;
             Visual.Invalidate();
             EditGraph.Update();
             if (ShowIcons)
@@ -205,10 +215,12 @@ namespace EditCinima
             Console.WriteLine("Done.");
             LoadPlugins();
             InitPlugins();
-            MoveIcon = new Tex2D("Data/Icons/MoveIcon.png", true);
-            RotateIcon = new Tex2D("Data/Icons/RotateIcon.png", true);
-            ScaleIcon = new Tex2D("Data/Icons/ScaleIcon.png", true);
-            LightIcon = new Tex2D("Data/Icons/LightIcon.png", true);
+            MoveIcon = new Tex2D(VFS.Load("MoveIcon.png", "Data/Icons/"),true);
+
+//            MoveIcon = new Tex2D("Data/Icons/MoveIcon.png", true);
+            RotateIcon = new Tex2D(VFS.Load("RotateIcon.png","Data/Icons/"), true);
+            ScaleIcon = new Tex2D(VFS.Load("ScaleIcon.png", "Data/Icons/"),true);
+            LightIcon = new Tex2D(VFS.Load("LightIcon.png","Data/Icons/"), true);
             UpdateTick.Enabled = true;
         }
 
@@ -322,15 +334,17 @@ namespace EditCinima
         {
             ResizeUI();
         }
-
+        bool render = false;
         private void Visual_Paint_1(object sender, PaintEventArgs e)
         {
-       //     Console.WriteLine("Drawn.");
+            //     Console.WriteLine("Drawn.");
+            render = true;
             ResizeUI();
             Visual.Clear();
 
             Render.To2D();
 
+            
             EditGraph.Draw();
 
             if (ShowIcons || IconsAlpha > 0.0f) 
@@ -379,6 +393,7 @@ namespace EditCinima
             
 
             Visual.Swap();
+            render = false;
         }
         public int EditMode = 0;
         private string oldNodeName = "";
@@ -605,6 +620,64 @@ namespace EditCinima
         private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+        public List<PluginForm> PlugForms = new List<PluginForm>();
+        private void UI2_DoubleClick(object sender, EventArgs e)
+        {
+            if (UI2.SelectedIndex == 0) return;
+            int si = UI2.SelectedIndex;
+            var pc = UI2.Controls[UI2.SelectedIndex].Controls[0];
+            var ncl = new List<Control>();
+            for(int i = 0; i < UI2.Controls.Count;i++)
+            {
+                if (i != si)
+                {
+                    ncl.Add(UI2.Controls[i]);
+                }
+            }
+            UI2.Controls.Clear();
+            foreach(var c in ncl)
+            {
+                UI2.Controls.Add(c);
+            }
+
+            var nf = new PluginForm();
+            nf.Show();
+            nf.Text = pc.Name;
+            nf.PluginControl = pc;
+            pc.Dock = DockStyle.Fill;
+            nf.TopMost = true;
+            nf.PlugPan.Controls.Add(pc);
+            
+
+            
+        }
+
+        private void UI2_DragOver(object sender, DragEventArgs e)
+        {
+            Console.WriteLine("Over!");
+        }
+
+        private void UI2_DragEnter(object sender, DragEventArgs e)
+        {
+            Console.WriteLine("DRAG");
+        }
+
+        private void loadSceneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateTick.Enabled = false;
+            while (render)
+            {
+
+            }
+            UpdateTick.Enabled = false;
+            BrowseFile.DefaultExt = ".graph";
+            BrowseFile.ShowDialog();
+            var ng = new SceneGraph();
+            ng.Load(BrowseFile.FileName);
+            EditGraph = ng;
+            SyncUI();
+            UpdateTick.Enabled = true;
         }
 
         public int MX, MY;

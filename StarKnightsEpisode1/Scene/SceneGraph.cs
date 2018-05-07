@@ -7,6 +7,7 @@ using StarEngine.Draw;
 using StarEngine.FXS;
 using StarEngine.Reflect;
 using OpenTK;
+using System.IO;
 namespace StarEngine.Scene
 {
     public class SceneGraph
@@ -199,50 +200,60 @@ namespace StarEngine.Scene
         
         public void DrawNode(GraphNode node)
         {
+            //if(node.ImgFrame == null) 
+
             if (node.ImgFrame != null)
             {
-       
-            }
+
+                if(node.ImgFrame.Width < 2)
+                {
+                    Console.WriteLine("Illegal Image ID:" + node.ImgFrame.ID);
+                    while (true)
+                    {
+
+                    }
+                }
 
                 bool first = true;
 
-            foreach (var light in Lights)
-            {
-                if (node.ImgFrame == null) continue;
-                LitImage.Graph = this;
-                LitImage.Light = light;
-
-                if (first)
+                foreach (var light in Lights)
                 {
-                    Render.SetBlend(BlendMode.None);
-                    first = false;
+                    if (node.ImgFrame == null) continue;
+                    LitImage.Graph = this;
+                    LitImage.Light = light;
+
+                    if (first)
+                    {
+                        Render.SetBlend(BlendMode.Alpha);
+                        first = false;
+                    }
+                    else
+                    {
+                        Render.SetBlend(BlendMode.Add);
+                    }
+
+                    LitImage.Bind();
+
+
+                    float[] xc;
+                    float[] yc;
+
+                    node.SyncCoords();
+
+                    xc = node.XC;
+                    yc = node.YC;
+
+                    Render.Image(node.DrawP, node.ImgFrame);
+
+
+
+                    //Render.Image(xc, yc, node.ImgFrame);
+
+
+
+                    LitImage.Release();
+
                 }
-                else
-                {
-                    Render.SetBlend(BlendMode.Add);
-                }
-
-                LitImage.Bind();
-
-
-                float[] xc;
-                float[] yc;
-
-                node.SyncCoords();
-
-                xc = node.XC;
-                yc = node.YC;
-
-                Render.Image(node.DrawP, node.ImgFrame);
-                
-
-                
-                //Render.Image(xc, yc, node.ImgFrame);
-
-
-
-                LitImage.Release();
-
             }
             foreach(var snode in node.Nodes)
             {
@@ -305,6 +316,48 @@ namespace StarEngine.Scene
             r.X = r.X + X;
             r.Y = r.Y + Y;
             return r;
+        }
+        public void Load(string path)
+        {
+            Console.WriteLine("Path:" + path);
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            BinaryReader r = new BinaryReader(fs);
+            X = r.ReadSingle();
+            Y = r.ReadSingle();
+            Z = r.ReadSingle();
+            Rot = r.ReadSingle();
+            int lc = r.ReadInt32();
+            for(int i = 0; i < lc; i++)
+            {
+                var nl = new GraphLight();
+                nl.Read(r);
+                Add(nl);
+            }
+            Root = new GraphNode();
+            Root.Graph = this;
+            Root.Read(r);
+            fs.Close();
+            r = null;
+            fs = null;
+        }
+        public void Save(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
+            BinaryWriter w = new BinaryWriter(fs);
+            w.Write(X);
+            w.Write(Y);
+            w.Write(Z);
+            w.Write(Rot);
+            w.Write(Lights.Count());
+            foreach (var l in Lights)
+            {
+                l.Write(w);
+            }
+            Root.Write(w);
+            fs.Flush();
+            fs.Close();
+            w = null;
+            fs = null;
         }
 
     }
