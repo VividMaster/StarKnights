@@ -26,7 +26,7 @@ namespace StarEngine.Archive
             get
             {
                 long s = 0;
-                foreach(var e in Enteries)
+                foreach (var e in Enteries)
                 {
                     s += e.Size;
                 }
@@ -35,12 +35,12 @@ namespace StarEngine.Archive
 
         }
 
-        public VirtualEntry Find(string name,string path)
+        public VirtualEntry Find(string name, string path)
         {
 
-            foreach(var entry in Enteries)
+            foreach (var entry in Enteries)
             {
-                if(entry.Name == name && entry.Path == path)
+                if (entry.Name == name && entry.Path == path)
                 {
                     return entry;
                 }
@@ -49,63 +49,154 @@ namespace StarEngine.Archive
         }
         public void ReadToc(string path)
         {
+            arcpath = path + ".vfs";
+            path = path + ".toc";
+            //Console.WriteLine("Opening TOC:" + path);
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
-
+            //Console.WriteLine("Opened. Parsing table.");
             int ec = r.ReadInt32();
-            for(int i = 0; i < ec; i++)
+            Console.WriteLine("Enteries:" + ec);
+            for (int i = 0; i < ec; i++)
             {
                 var ne = new VirtualEntry();
+                for(int i2 = 0; i2 < 16; i2++)
+                {
+                    ne.Par[i2] = r.ReadInt32();
+                }
                 ne.Name = r.ReadString();
                 ne.Path = r.ReadString();
-          //      ne.ImgW = r.ReadInt32();
-         //       ne.ImgH = r.ReadInt32();
+                ne.Compressed = r.ReadBoolean();
+           //     Console.WriteLine("Name:" + ne.Name + " Path:" + ne.Path + " Compressed?" + ne.Compressed);
+                //      ne.ImgW = r.ReadInt32();
+                //       ne.ImgH = r.ReadInt32();
                 ne.Start = r.ReadInt64();
                 ne.Size = r.ReadInt64();
                 Enteries.Add(ne);
             }
 
         }
-        public VirtualEntry Load(string name,string path)
+        public VirtualEntry Load(VirtualEntry e)
         {
-            name = name.ToLower();
-            path = path.ToLower();
-            int i = 0;
-            VirtualEntry e = null;
-            foreach(var entry in Enteries)
-            {
-                Console.WriteLine("Name:" + entry.Name);
-            //    Console.WriteLine("Path:" + entry.Path);
-                if(entry.Name.ToLower() == name)
-                {
-                //    if(entry.Path.ToLower().Contains(path))
-                  //  {
-                        Console.WriteLine("Found:" + name);
-                        Console.WriteLine("Start:" + entry.Start);
-                        Console.WriteLine("Size:" + entry.Size);
-                        Console.WriteLine("Index:" + i);
-                    if (entry.Loaded == false)
-                    {
-                        FileStream fs = new FileStream(arcpath, FileMode.Open, FileAccess.Read);
-                        BinaryReader r = new BinaryReader(fs);
-                        entry.RawData = new byte[(int)entry.Size];
-                        fs.Seek(entry.Start, SeekOrigin.Begin);
-                        r.Read(entry.RawData, 0, (int)entry.Size);
-                        byte[] od;
-                        ZLib.DecompressData(entry.RawData, out od);
-                        entry.RawData = od;
-                        fs.Close();
+            //name = name.ToLower();
+            //path = path.ToLower();
 
-                        r = null;
-                        fs = null;
-                        entry.Loaded = true;
-                    }
-                        return entry;
-                   // }
+
+            if (e.Loaded == false)
+            {
+                FileStream fs = new FileStream(arcpath, FileMode.Open, FileAccess.Read);
+                BinaryReader r = new BinaryReader(fs);
+                e.RawData = new byte[(int)e.Size];
+                fs.Seek(e.Start, SeekOrigin.Begin);
+                r.Read(e.RawData, 0, (int)e.Size);
+                if (e.Compressed)
+                {
+                    byte[] od;
+                    ZLib.DecompressData(e.RawData, out od);
+                    e.RawData = od;
+                    fs.Close();
+                    e.Size = od.Length;
+                    e.Compressed = false;
                 }
-                i++;
+
+                r = null;
+                fs = null;
+                e.Loaded = true;
             }
             return e;
+
+
+        }
+    
+
+        public void Add(VirtualEntry entry)
+        {
+            Enteries.Add(entry);
+        }
+        public void Add(string path)
+        {
+          
+            var fi = new FileInfo(path);
+
+            var ext = fi.Extension.ToLower();
+            var qn = fi.Name.Replace(ext, "").ToLower();
+            switch (ext)
+            {
+                case ".bmp":
+                case ".jpg":
+                case ".png":
+                    var na = new VirtualEntry();
+
+                    System.Drawing.Bitmap tb = new System.Drawing.Bitmap(path);
+
+                    var rd = new byte[tb.Width * tb.Height * 4];
+                    int bi = 0;
+                    for(int y = 0; y < tb.Height; y++)
+                    {
+                        for(int x = 0; x < tb.Width; x++)
+                        {
+                            var pix = tb.GetPixel(x, y);
+                            rd[bi++] = pix.R;
+                            rd[bi++] = pix.G;
+                            rd[bi++] = pix.B;
+                            rd[bi++] = pix.A;
+                        }
+                    }
+
+                    na.RawData = rd;
+                    na.Par[0] = tb.Width;
+                    na.Par[1] = tb.Height;
+                    na.Par[2] = 1;
+                    tb.Dispose();
+
+                    na.Size = na.RawData.Length;
+                    na.Name = qn;
+                    na.Path = path;
+                    Enteries.Add(na);
+                    break;
+                case ".cs":
+
+                    var sb = File.ReadAllBytes(path);
+
+                    var ve = new VirtualEntry();
+                    ve.RawData = sb;
+                    ve.Size = sb.Length;
+                    ve.Name = qn;
+                    ve.Path = path;
+                    Enteries.Add(ve);
+                    break;
+                case ".graph":
+                    var gb = File.ReadAllBytes(path);
+                    var e2 = new VirtualEntry();
+                    e2.RawData = gb;
+                    e2.Size = gb.Length;
+                    e2.Name = qn;
+                    e2.Path = path;
+                    Enteries.Add(e2);
+                    break;
+                              
+            }
+
+        }
+       public Tex.Tex2D GetTex(string name)
+        {
+            var e = GetEntry(name);
+            Load(e);
+            return new Tex.Tex2D(e, true);
+
+        }
+
+        public VirtualEntry GetEntry(string name)
+        {
+            name = name.ToLower();
+            foreach(var e in Enteries)
+            {
+                if(e.Name.ToLower() == name)
+                {
+                    return e;
+                }
+            }
+            return null;
         }
         public void Update(string path)
         {
@@ -125,11 +216,32 @@ namespace StarEngine.Archive
         }
         string arcpath = "";
         string tocpath = "";
+        public void Save(string name,bool compressed)
+        {
+            if (compressed)
+            {
+                foreach (var v in Enteries)
+                {
+                    if (v.Compressed == false)
+                    {
+                        byte[] od = null;
+                        ZLib.CompressData(v.RawData, out od);
+                        v.RawData = od;
+                        v.Size = od.Length;
+                        v.Compressed = true;
+                    }
+                }
+
+            }
+            SaveTOC(name);
+            SaveFS(name);
+        }
         public void SaveFS(string path)
         {
 
+
            
-            FileStream fs = new FileStream(path + "arc.vfs", FileMode.Create, FileAccess.Write);
+            FileStream fs = new FileStream(path + ".vfs", FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
 
             foreach(var e in Enteries)
@@ -150,7 +262,7 @@ namespace StarEngine.Archive
         public void SaveTOC(string path)
         {
 
-            FileStream fs = new FileStream(path+"arc.toc", FileMode.Create, FileAccess.Write);
+            FileStream fs = new FileStream(path+".toc", FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
 
 
@@ -158,9 +270,13 @@ namespace StarEngine.Archive
             w.Write(Enteries.Count);
             foreach(var e in Enteries)
             {
+                for(int i = 0; i < 16; i++)
+                {
+                    w.Write(e.Par[i]);
+                }
                 w.Write(e.Name);
                 w.Write(e.Path);
-                
+                w.Write(e.Compressed);
                 w.Write(start);
                 w.Write(e.Size);
                 
@@ -203,7 +319,7 @@ namespace StarEngine.Archive
                     entry.RawData = od;
                     
                     entry.Size = entry.RawData.Length;
-                    Console.WriteLine("Original:" + os + " New:" + od.Length);
+                    Console.WriteLine("Adding:" + entry.Name);
                     Enteries.Add(entry);
                 }
 
@@ -221,12 +337,19 @@ namespace StarEngine.Archive
     }
     public class VirtualEntry
     {
+        public int[] Par = new int[16];
         public string Name
         {
             get;
             set;
         }
      
+        public bool Compressed
+        {
+            get;
+            set;
+        }
+
         public string Path
         {
             get;
@@ -258,6 +381,7 @@ namespace StarEngine.Archive
             Start = Size = 0;
             Name = "";
             Path = "";
+            Compressed = false;
         }
         public byte[] ToBytes()
         {

@@ -23,6 +23,7 @@ namespace StarEngine.Tex
             get;
             set;
         }
+        public byte[] RawData;
         public static byte[] TmpStore = null;
         public override string ToString()
         {
@@ -50,9 +51,13 @@ namespace StarEngine.Tex
             Height = img.Height;
             Alpha = alpha;
 
+            int pc = 3;
+            if (Alpha) pc = 4;
+            RawData = new byte[Width * Height * pc];
+
             //GL.TexImage2D(TextureTarget.Texture2D,0,PixelInternalFormat.)
 
-
+            
 
             int pi = 0;
             for (int y = 0; y < img.Height; y++)
@@ -60,12 +65,12 @@ namespace StarEngine.Tex
                 for (int x = 0; x < img.Width; x++)
                 {
                     var pix = img.GetPixel(x, y);
-                    TmpStore[pi++] = pix.R;
-                    TmpStore[pi++] = pix.G;
-                    TmpStore[pi++] = pix.B;
+                    RawData[pi++] = pix.R;
+                    RawData[pi++] = pix.G;
+                    RawData[pi++] = pix.B;
                     if (alpha)
                     {
-                        TmpStore[pi++] = pix.A;
+                        RawData[pi++] = pix.A;
                     }
 
                 }
@@ -74,11 +79,11 @@ namespace StarEngine.Tex
 
             if (alpha)
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TmpStore);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData);
             }
             else
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, TmpStore);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, RawData);
             }
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
@@ -90,49 +95,45 @@ namespace StarEngine.Tex
             GL.BindTexture(TextureTarget.Texture2D, 0);
 
         }
-        public Dictionary<string, Tex2D> Lut = new Dictionary<string, Tex2D>();
+        public static Dictionary<VirtualEntry, Tex2D> VLut = new Dictionary<VirtualEntry, Tex2D>();
+        public static Dictionary<string, Tex2D> Lut = new Dictionary<string, Tex2D>();
         public Tex2D(VirtualEntry entry,bool alpha)
         {
-            if (entry == null)
-            {
-                Console.WriteLine("Can not load null texture entry.");
-                while (true)
-                {
-
-                }
-            }
-            if (entry.Name.Contains(".cache"))
-            {
-                Console.WriteLine("Loading Cached entry");
-            }
-            else
-            {
-                Console.WriteLine("Loading texture entry.");
-            }
-
-
-            if (Lut.ContainsKey(entry.Name))
+            Path = entry.Name;
+           
+          
+            if (VLut.ContainsKey(entry)) 
             {
 
-                var ot = Lut[entry.Name];
-                ID = ot.ID;
+                var ot = VLut[entry];
+                    ID = ot.ID;
                 Width = ot.Width;
                 Height = ot.Height;
                 Alpha = ot.Alpha;
                 Name = ot.Name;
+                Path = ot.Path;
+                RawData = ot.RawData;
+               /// Console.WriteLine("Lut:" + Name);
                 return;
             }
             else
             {
-                Lut.Add(entry.Name, this);
+ 
+                VLut.Add(entry, this);
+               
+
             }
 
 
-            MemoryStream ms = new MemoryStream(entry.RawData);
-            Bitmap img = new Bitmap(ms);
-            Width = img.Width;
-            Height = img.Height;
-            Alpha = alpha;
+
+            Width = entry.Par[0];
+            Height = entry.Par[1];
+            Alpha = entry.Par[2] == 1 ? true : false;
+
+            int pc = 3;
+            if (Alpha) pc = 4;
+
+            RawData = entry.RawData;
 
             GL.Enable(EnableCap.Texture2D);
             ID = GL.GenTexture();
@@ -142,38 +143,18 @@ namespace StarEngine.Tex
 
             //GL.TexImage2D(TextureTarget.Texture2D,0,PixelInternalFormat.)
 
-            if (TmpStore == null)
-            {
-
-                TmpStore = new byte[4096 * 4096 * 4];
-
-            }
+    
 
 
-            int pi = 0;
-            for (int y = 0; y < img.Height; y++)
-            {
-                for (int x = 0; x < img.Width; x++)
-                {
-                    var pix = img.GetPixel(x, y);
-                    TmpStore[pi++] = pix.R;
-                    TmpStore[pi++] = pix.G;
-                    TmpStore[pi++] = pix.B;
-                    if (alpha)
-                    {
-                        TmpStore[pi++] = pix.A;
-                    }
-
-                }
-            }
+         
 
             if (alpha)
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TmpStore);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData);
             }
             else
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, TmpStore);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, RawData);
             }
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
@@ -227,6 +208,7 @@ namespace StarEngine.Tex
                 ID = ot.ID;
                 Width = ot.Width;
                 Height = ot.Height;
+                Path = ot.Path;
                 Alpha = ot.Alpha;
                 Name = ot.Name;
                 return;
@@ -240,12 +222,7 @@ namespace StarEngine.Tex
 
             Console.WriteLine("Reading:" + path);
 
-            if (TmpStore == null)
-            {
-
-                TmpStore = new byte[4096 * 4096 * 4];
-
-            }
+           
             
             GL.Enable(EnableCap.Texture2D);
             ID = GL.GenTexture();
@@ -263,8 +240,10 @@ namespace StarEngine.Tex
                 Alpha = r.ReadBoolean();
                 int pc = 3;
                 if (Alpha) pc = 4;
-                
-                r.Read(TmpStore, 0,Width * Height * pc);
+
+                RawData = new byte[Width * Height * pc];
+
+                r.Read(RawData, 0,Width * Height * pc);
 
                 fs.Close();
                 fs = null;
@@ -280,6 +259,11 @@ namespace StarEngine.Tex
                 Height = img.Height;
                 Alpha = alpha;
 
+                int pc = 3;
+                if (Alpha) pc = 4;
+
+                RawData = new byte[Width * Height * pc];
+
                 //GL.TexImage2D(TextureTarget.Texture2D,0,PixelInternalFormat.)
 
 
@@ -290,12 +274,12 @@ namespace StarEngine.Tex
                     for (int x = 0; x < img.Width; x++)
                     {
                         var pix = img.GetPixel(x, y);
-                        TmpStore[pi++] = pix.R;
-                        TmpStore[pi++] = pix.G;
-                        TmpStore[pi++] = pix.B;
+                        RawData[pi++] = pix.R;
+                        RawData[pi++] = pix.G;
+                        RawData[pi++] = pix.B;
                         if (alpha)
                         {
-                            TmpStore[pi++] = pix.A;
+                            RawData[pi++] = pix.A;
                         }
 
                     }
@@ -312,9 +296,9 @@ namespace StarEngine.Tex
                 w.Write((short)Width);
                 w.Write((short)Height);
                 w.Write(Alpha);
-                int pc = 3;
+                pc = 3;
                 if (alpha) pc = 4;
-                w.Write(TmpStore, 0, Width * Height * pc);
+                w.Write(RawData, 0, Width * Height * pc);
                 fs.Flush();
                 fs.Close();
                 fs = null;
@@ -322,11 +306,11 @@ namespace StarEngine.Tex
 
             if (alpha)
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, TmpStore);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, RawData);
             }
             else
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, TmpStore);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, Width, Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte,RawData);
             }
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS,(int)TextureWrapMode.Clamp);

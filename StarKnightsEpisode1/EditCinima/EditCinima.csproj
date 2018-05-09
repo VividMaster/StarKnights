@@ -197,6 +197,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\StarKnightGameplay\StarKnightGameplay.csproj">
+      <Project>{e37bc530-6d65-4eb2-9ec1-f0963d0804a8}</Project>
+      <Name>StarKnightGameplay</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CinePlugins\CinePlugins.csproj">
       <Project>{3d93ff7b-12bf-46c3-bb58-133473e83c89}</Project>
       <Name>CinePlugins</Name>

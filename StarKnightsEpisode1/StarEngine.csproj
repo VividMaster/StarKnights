@@ -187,6 +187,7 @@
     <Compile Include="Scene\GraphSprite.cs" />
     <Compile Include="Scene\SceneGraph.cs" />
     <Compile Include="Scene\GraphNode.cs" />
+    <Compile Include="Scene\SceneInfo.cs" />
     <Compile Include="Script\SciprtNode.cs" />
     <Compile Include="Script\ScriptBase.cs" />
     <Compile Include="Script\ScriptIO.cs" />

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using StarEngine.Scene;
 using StarEngine.Tex;
 using System.IO;
+using StarKnightGameplay;
 namespace UniverseGen
 {
     public partial class UniverseGenControl : UserControl
@@ -25,7 +26,7 @@ namespace UniverseGen
         {
             InitializeComponent();
             SeedBox.Text = Environment.TickCount.ToString();
-            GalImg = LoadImgs("Data/Maps/", "g1.png", "g2.png");
+            GalImg = LoadImgs("Data/Maps/", "gal1.png", "gal2.png","gal3.png","gal4.png");
             BgStarImg = LoadImgs("Data/Maps/", "bgstar1.png");
             PlanImg = LoadImgs("Data/Maps/Galaxy/Planet/", "plan1.png");
             SunImg = LoadImgs("Data/Maps/Galaxy/Sun/", "sun1.png", "sun2.png");
@@ -44,7 +45,7 @@ namespace UniverseGen
             var ia = new Tex2D[file.Length];
             foreach (var f in file)
             {
-                ia[ic] = new Tex2D(path+f, true);
+                ia[ic++] = new Tex2D(path+f, true);
             }
             return ia;
         }
@@ -113,8 +114,26 @@ namespace UniverseGen
                 sn.Name = "BgStar" + i.ToString();
                 sn.ImgFrame = BgStarImg[r.Next(0, BgStarImg.Length - 1)];
                 uniscene.Root.Nodes.Add(sn);
-
+                sn.Root = uniscene.Root;
+                sn.Graph = uniscene;
             }
+
+            for(int i = 0; i < numgal; i++)
+            {
+                int x = r.Next(-uw / 2, uw / 2);
+                int y = r.Next(-uh / 2, uh / 2);
+                var gn = new GraphNode();
+                gn.X = x;
+                gn.Y = y;
+                gn.Z = 0.3f + (float)r.NextDouble() * 1.5f;
+                gn.Rot = r.Next(0, 360);
+                gn.Name = "Galaxy:" + i;
+                gn.ImgFrame = GalImg[r.Next(0, GalImg.Length - 1)];
+                uniscene.Root.Nodes.Add(gn);
+                gn.Root = uniscene.Root;
+                gn.Graph = uniscene;
+            }
+
             if(new FileInfo("Data/Uni/UniGraph.graph").Exists)
             {
                 File.Delete("Data/Uni/UniGraph.graph");

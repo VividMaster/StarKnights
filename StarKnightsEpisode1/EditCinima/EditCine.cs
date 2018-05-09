@@ -23,6 +23,7 @@ using StarEngine.Script;
 using StarEngine.Reflect;
 using System.Reflection;
 using StarEngine.Archive;
+using StarKnightGameplay;
 namespace EditCinima
 {
     public partial class EditCine : Form
@@ -36,11 +37,23 @@ namespace EditCinima
             UIP = UI2;
             DoubleBuffered = true;
             //Visual.ResizeGL();
-            VFS = new VirtualFileSystem();
-            VFS.Update("Data/");
-            Console.WriteLine("VFS Enteries:" + VFS.Enteries.Count);
-            Console.WriteLine("VFS Size:" + VFS.Size);
-            VFS.Load("ship1.png", "Data/");
+           // VFS = new VirtualFileSystem();
+           // GameInfo.VFS = VFS;
+           // VFS.Update("Data/");
+         //   SceneInfo.VFS = VFS;
+            //Console.WriteLine("VFS Enteries:" + VFS.Enteries.Count);
+            //Console.WriteLine("VFS Size:" + VFS.Size);
+           // VFS.Load("ship1.png", "Data/");
+            mxi = 0;
+            myi = 0;
+            mzi = 0;
+            mdrag = 0.65f;
+        }
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+
+            mzi = mzi + (float)(e.Delta) * 0.00015f;
+            
         }
         public VirtualFileSystem VFS;
         public static TabControl UIP;
@@ -49,6 +62,7 @@ namespace EditCinima
         public ScriptName ChooseScriptNAme = null;
         public List<CinePlugins.CinePlugin> Plugins = new List<CinePlugins.CinePlugin>();
         public Tex2D MoveIcon, RotateIcon, ScaleIcon, LightIcon;
+        float mxi, myi, mzi, mdrag;
         public void LoadDefaults()
         {
             DefScript = System.IO.File.ReadAllText("res/defaultScript.cs");
@@ -76,7 +90,16 @@ namespace EditCinima
 
         private void UpdateTick_Tick(object sender, EventArgs e)
         {
+
+            EditGraph.X = EditGraph.X + mxi / EditGraph.Z;
+            EditGraph.Y = EditGraph.Y + myi / EditGraph.Z;
+            EditGraph.Z = EditGraph.Z + (mzi*0.3f) / EditGraph.Z;
+
+            mxi = mxi * mdrag;
+            myi = myi * mdrag;
+            mzi = mzi * mdrag;
             if (render) return;
+
             Visual.Invalidate();
             EditGraph.Update();
             if (ShowIcons)
@@ -200,6 +223,7 @@ namespace EditCinima
 
         private void EditCine_Load(object sender, EventArgs e)
         {
+            int sms = Environment.TickCount;
             UpdateTick.Enabled = false;
             Visual.MakeCurrent();
             Visual.InitGL();
@@ -208,20 +232,29 @@ namespace EditCinima
             ResizeUI();
             Console.WriteLine("Reflecting class.");
             Console.WriteLine(EditGraph == null ? "null" : "fine");
-            Visual.ContextMenuStrip = EditMenu;
+          //  Visual.ContextMenuStrip = EditMenu;
 
             var ci = new ClassIO(EditGraph);
             ci.Copy();
             Console.WriteLine("Done.");
             LoadPlugins();
             InitPlugins();
-            MoveIcon = new Tex2D(VFS.Load("MoveIcon.png", "Data/Icons/"),true);
+            var iconfs = new VirtualFileSystem();
+            iconfs.ReadToc("Data/Icons/icons");
+
+            MoveIcon = iconfs.GetTex("MoveIcon");
+            RotateIcon = iconfs.GetTex("RotateIcon");
+            ScaleIcon = iconfs.GetTex("ScaleIcon");
+            LightIcon = iconfs.GetTex("LightIcon");
+            //MoveIcon = new Tex2D("Data/Icons/MoveIcon.png",true);
 
 //            MoveIcon = new Tex2D("Data/Icons/MoveIcon.png", true);
-            RotateIcon = new Tex2D(VFS.Load("RotateIcon.png","Data/Icons/"), true);
-            ScaleIcon = new Tex2D(VFS.Load("ScaleIcon.png", "Data/Icons/"),true);
-            LightIcon = new Tex2D(VFS.Load("LightIcon.png","Data/Icons/"), true);
+           // RotateIcon = new Tex2D("Data/Icons/RotateIcon.png",true);
+            //ScaleIcon = new Tex2D("Data/Icons/ScaleIcon.png",true);
+            //LightIcon = new Tex2D("Data/Icons/LightIcon.png", true);
             UpdateTick.Enabled = true;
+            int ems = Environment.TickCount;
+            Console.WriteLine("StartUp Time:" + (float)(ems - sms) / 1000.0f);
         }
 
         public void InitPlugins()
@@ -576,8 +609,13 @@ namespace EditCinima
         public float IconsAlpha = 0.0f;
         bool MouseIn = false;
         float MXD, MYD;
+        bool MapIn = false;
         private void Visual_MouseDown(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            {
+                MapIn = true;
+            }
             if (e.Button == MouseButtons.Left)
             {
                 MouseIn = true;
@@ -658,6 +696,43 @@ namespace EditCinima
             Console.WriteLine("Over!");
         }
 
+        private void savePayLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utc = 0;
+            Directory.CreateDirectory("TempPayload");
+            List<Tex2D> UT = new List<Tex2D>();
+            ScanScene(EditGraph, UT, EditGraph.Root);
+            Console.WriteLine("Scanned scene. Unique images:" + utc);
+            VirtualFileSystem VFS = new VirtualFileSystem();
+
+        }
+        private int utc = 0;
+        public void ScanScene(SceneGraph s,List<Tex2D> UT,GraphNode node)
+        {
+            
+            if(node.ImgFrame!=null)
+            {
+                bool found = false;
+                foreach(var t in UT)
+                {
+                    if(t.Path == node.ImgFrame.Path)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    UT.Add(node.ImgFrame);
+                    utc++;
+                }
+            }
+            foreach(var n2 in node.Nodes)
+            {
+                ScanScene(s, UT, n2);
+            }
+        }
+
         private void UI2_DragEnter(object sender, DragEventArgs e)
         {
             Console.WriteLine("DRAG");
@@ -680,10 +755,19 @@ namespace EditCinima
             UpdateTick.Enabled = true;
         }
 
+        private void Visual_Scroll(object sender, ScrollEventArgs e)
+        {
+           
+        }
+
         public int MX, MY;
 
         private void Visual_MouseUp(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            {
+                MapIn = false;
+            }
             if (e.Button == MouseButtons.Left)
             {
                 MouseIn = false;
@@ -699,9 +783,17 @@ namespace EditCinima
         {
             EditMode = 1;
         }
-
+        
         private void Visual_MouseMove(object sender, MouseEventArgs e)
         {
+
+            if (MapIn)
+            {
+                mxi = mxi + MXD;
+                myi = myi + MYD;
+           
+            }
+
             MoveOn = false;
             RotateOn = false;
             if(e.Y<100)

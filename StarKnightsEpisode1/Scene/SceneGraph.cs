@@ -319,7 +319,7 @@ namespace StarEngine.Scene
         }
         public void Load(string path)
         {
-            Console.WriteLine("Path:" + path);
+     
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
             X = r.ReadSingle();

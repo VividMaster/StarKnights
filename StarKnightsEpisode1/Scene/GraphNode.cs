@@ -280,13 +280,15 @@ namespace StarEngine.Scene
             Z = r.ReadSingle();
             Rot = r.ReadSingle();
             Name = r.ReadString();
-            Console.WriteLine("Node:" + Name);
+
             if (r.ReadBoolean())
             {
                 bool alpha = r.ReadBoolean();
                 var tp = r.ReadString();
-                Console.WriteLine("TP:" + tp);
-                ImgFrame = new Tex.Tex2D(tp, alpha);
+  
+               
+                    ImgFrame = new Tex.Tex2D(tp, alpha);
+             
             }
             int nc = r.ReadInt32();
             for(int i = 0; i < nc; i++)

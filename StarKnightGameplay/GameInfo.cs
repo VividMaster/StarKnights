@@ -12,6 +12,7 @@ namespace StarKnightGameplay
         public static List<CharClass> Classes = new List<CharClass>();
         public static List<Entity> Entities = new List<Entity>();
         public static List<AnimationSet> AnimSets = new List<AnimationSet>();
+        public static StarEngine.Archive.VirtualFileSystem VFS = null;
         public static void LoadClasses()
         {
 
