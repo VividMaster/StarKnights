@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using StarEngine.Scene;
 using StarEngine.Tex;
 using System.IO;
+using StarEngine.Archive;
 using StarKnightGameplay;
 namespace UniverseGen
 {
@@ -138,7 +139,13 @@ namespace UniverseGen
             {
                 File.Delete("Data/Uni/UniGraph.graph");
             }
-            uniscene.Save("Data/Uni/UniGraph.graph");
+
+            var ufs = new VirtualFileSystem();
+            ufs.Add(uniscene);
+            ufs.Save("Data/Uni/UniGraph", true);
+            Console.WriteLine("Wrote unifs");
+
+            //uniscene.Save("Data/Uni/UniGraph.graph");
             Console.WriteLine("Universed created and saved.");
 
 

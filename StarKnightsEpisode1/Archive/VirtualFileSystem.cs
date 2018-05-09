@@ -49,6 +49,7 @@ namespace StarEngine.Archive
         }
         public void ReadToc(string path)
         {
+            path = path.Replace(".toc", "");
             arcpath = path + ".vfs";
             path = path + ".toc";
             //Console.WriteLine("Opening TOC:" + path);
@@ -112,6 +113,33 @@ namespace StarEngine.Archive
         public void Add(VirtualEntry entry)
         {
             Enteries.Add(entry);
+        }
+        public void Add(Scene.SceneGraph graph)
+        {
+
+            var ge = new VirtualEntry();
+            ge.Path = "VirtualFile";
+            ge.Name = graph.Root.Name;
+
+            var ms = new MemoryStream(1024 * 1024);
+            BinaryWriter w = new BinaryWriter(ms);
+
+            graph.WriteGraph(w);
+
+            var wd = new byte[ms.Position];
+            ms.Read(wd, 0, wd.Length);
+            Console.WriteLine("GraphSize:" + wd.Length + " bytes.");
+            ms.Flush();
+            w.Flush();
+            ms.Dispose();
+            ge.Loaded = true;
+            ge.Compressed = false;
+            Enteries.Add(ge);
+
+
+
+
+
         }
         public void Add(string path)
         {
@@ -379,6 +407,9 @@ namespace StarEngine.Archive
         {
             Loaded = false;
             Start = Size = 0;
+            Size = 1;
+            RawData = new byte[1];
+            RawData[0] = 0;
             Name = "";
             Path = "";
             Compressed = false;

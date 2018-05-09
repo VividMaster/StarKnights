@@ -32,9 +32,16 @@ namespace PayLoadEditor
         public void SyncUI()
         {
             FileBox.Items.Clear();
-            foreach(var f in Files)
+            foreach (var f in Files)
             {
-                FileBox.Items.Add(new System.IO.FileInfo(f.FullPath).Name + ":" + new System.IO.FileInfo(f.FullPath).Extension);
+                //if (f.FullPath != null && f.FullPath.Length > 2)
+                //{
+                  //  FileBox.Items.Add(new System.IO.FileInfo(f.FullPath).Name + ":" + new System.IO.FileInfo(f.FullPath).Extension);
+                //}
+                //else
+                //{
+                    FileBox.Items.Add(f.FullPath);
+                //}
             }
         }
 
@@ -88,7 +95,7 @@ namespace PayLoadEditor
             foreach (var entry in ofs.Enteries)
             {
                 var nf = new VFile();
-                nf.FullPath = entry.Path;
+                nf.FullPath = entry.Path + ":" + entry.Name;
                 Files.Add(nf);
             }
             SyncUI();
@@ -104,8 +111,16 @@ namespace PayLoadEditor
             {
                 if (i == vi)
                 {
-                    var ext = new System.IO.FileInfo(fe.FullPath).Extension;
-                    switch (ext)
+                    var ext = "";
+                    try
+                    {
+                       ext = new System.IO.FileInfo(fe.FullPath).Extension;
+                    }
+                    catch
+                    {
+                        ext = "";
+                    }
+                        switch (ext)
                     {
                         case ".jpg":
                         case ".bmp":

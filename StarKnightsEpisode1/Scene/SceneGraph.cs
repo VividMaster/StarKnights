@@ -344,6 +344,15 @@ namespace StarEngine.Scene
         {
             FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
             BinaryWriter w = new BinaryWriter(fs);
+            WriteGraph(w);
+            fs.Flush();
+            fs.Close();
+            w = null;
+            fs = null;
+        }
+
+        public  void WriteGraph(BinaryWriter w)
+        {
             w.Write(X);
             w.Write(Y);
             w.Write(Z);
@@ -354,11 +363,6 @@ namespace StarEngine.Scene
                 l.Write(w);
             }
             Root.Write(w);
-            fs.Flush();
-            fs.Close();
-            w = null;
-            fs = null;
         }
-
     }
 }
