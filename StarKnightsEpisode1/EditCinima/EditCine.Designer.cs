@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Scene");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Scene");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.CineMenu = new System.Windows.Forms.MenuStrip();
@@ -39,6 +39,8 @@
             this.newSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savePayLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.SceneTree = new System.Windows.Forms.TreeView();
             this.PropGrid = new System.Windows.Forms.PropertyGrid();
@@ -62,8 +64,7 @@
             this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveSceneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.savePayLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadPayloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -141,7 +142,8 @@
             this.newSceneToolStripMenuItem,
             this.loadSceneToolStripMenuItem,
             this.saveSceneToolStripMenuItem,
-            this.savePayLoadToolStripMenuItem});
+            this.savePayLoadToolStripMenuItem,
+            this.loadPayloadToolStripMenuItem});
             this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
             this.graphToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.graphToolStripMenuItem.Text = "Cine";
@@ -152,7 +154,7 @@
             this.newToolStripMenuItem,
             this.newSpriteToolStripMenuItem});
             this.graphToolStripMenuItem1.Name = "graphToolStripMenuItem1";
-            this.graphToolStripMenuItem1.Size = new System.Drawing.Size(134, 22);
+            this.graphToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.graphToolStripMenuItem1.Text = "Graph";
             // 
             // newToolStripMenuItem
@@ -172,16 +174,29 @@
             // newSceneToolStripMenuItem
             // 
             this.newSceneToolStripMenuItem.Name = "newSceneToolStripMenuItem";
-            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.newSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newSceneToolStripMenuItem.Text = "New Scene";
             this.newSceneToolStripMenuItem.Click += new System.EventHandler(this.newSceneToolStripMenuItem_Click);
             // 
             // loadSceneToolStripMenuItem
             // 
             this.loadSceneToolStripMenuItem.Name = "loadSceneToolStripMenuItem";
-            this.loadSceneToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.loadSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadSceneToolStripMenuItem.Text = "Load Scene";
             this.loadSceneToolStripMenuItem.Click += new System.EventHandler(this.loadSceneToolStripMenuItem_Click);
+            // 
+            // saveSceneToolStripMenuItem
+            // 
+            this.saveSceneToolStripMenuItem.Name = "saveSceneToolStripMenuItem";
+            this.saveSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveSceneToolStripMenuItem.Text = "Save Scene";
+            // 
+            // savePayLoadToolStripMenuItem
+            // 
+            this.savePayLoadToolStripMenuItem.Name = "savePayLoadToolStripMenuItem";
+            this.savePayLoadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.savePayLoadToolStripMenuItem.Text = "Save PayLoad";
+            this.savePayLoadToolStripMenuItem.Click += new System.EventHandler(this.savePayLoadToolStripMenuItem_Click);
             // 
             // splitContainer5
             // 
@@ -209,10 +224,10 @@
             this.SceneTree.LabelEdit = true;
             this.SceneTree.Location = new System.Drawing.Point(0, 0);
             this.SceneTree.Name = "SceneTree";
-            treeNode2.Name = "SceneRoot";
-            treeNode2.Text = "Scene";
+            treeNode1.Name = "SceneRoot";
+            treeNode1.Text = "Scene";
             this.SceneTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode1});
             this.SceneTree.Size = new System.Drawing.Size(264, 266);
             this.SceneTree.TabIndex = 1;
             this.SceneTree.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.SceneTree_BeforeLabelEdit);
@@ -408,18 +423,12 @@
             this.toolStripMenuItem1.Text = "Add Light";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
-            // saveSceneToolStripMenuItem
+            // loadPayloadToolStripMenuItem
             // 
-            this.saveSceneToolStripMenuItem.Name = "saveSceneToolStripMenuItem";
-            this.saveSceneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveSceneToolStripMenuItem.Text = "Save Scene";
-            // 
-            // savePayLoadToolStripMenuItem
-            // 
-            this.savePayLoadToolStripMenuItem.Name = "savePayLoadToolStripMenuItem";
-            this.savePayLoadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.savePayLoadToolStripMenuItem.Text = "Save PayLoad";
-            this.savePayLoadToolStripMenuItem.Click += new System.EventHandler(this.savePayLoadToolStripMenuItem_Click);
+            this.loadPayloadToolStripMenuItem.Name = "loadPayloadToolStripMenuItem";
+            this.loadPayloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadPayloadToolStripMenuItem.Text = "Load Payload";
+            this.loadPayloadToolStripMenuItem.Click += new System.EventHandler(this.loadPayloadToolStripMenuItem_Click);
             // 
             // EditCine
             // 
@@ -495,6 +504,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadSceneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveSceneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem savePayLoadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadPayloadToolStripMenuItem;
     }
 }
 

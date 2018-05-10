@@ -95,6 +95,7 @@ namespace UniverseGen
 
             var uniscene = new SceneGraph();
             uniscene.Root.Name = "Universe Root";
+            uniscene.Z = 1.0f;
             int bs = r.Next(100, 200);
 
             var ul = new GraphLight();

@@ -114,8 +114,44 @@ namespace StarEngine.Archive
         {
             Enteries.Add(entry);
         }
+        public void AddMediaFromNode(Scene.GraphNode node)
+        {
+            if (node.ImgFrame != null)
+            {
+                bool found = false;
+                foreach (var e in Enteries)
+                {
+                    if (e.Name == node.ImgFrame.Name && e.Path == node.ImgFrame.Path)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    var ve = new VirtualEntry();
+                    ve.Name = node.ImgFrame.Name;
+                    ve.Path = node.ImgFrame.Path;
+                    ve.RawData = node.ImgFrame.RawData;
+                    ve.Size = ve.RawData.Length;
+                    ve.Type = EntryType.Index;
+                    ve.Par[0] = node.ImgFrame.Width;
+                    ve.Par[1] = node.ImgFrame.Height;
+                    ve.Par[2] = node.ImgFrame.Alpha ? 1 : 0;
+                    Console.WriteLine("N:" + node.ImgFrame.Width + " H:" + node.ImgFrame.Height + " Alpha:" + node.ImgFrame.Alpha);
+                    ve.Loaded = true;
+                    ve.Compressed = false;
+                    Enteries.Add(ve);
+                }
+            }
+            foreach(var n2 in node.Nodes)
+            {
+                AddMediaFromNode(n2);
+            }
+        }
         public void Add(Scene.SceneGraph graph)
         {
+
+            AddMediaFromNode(graph.Root);
 
             var ge = new VirtualEntry();
             ge.Path = "VirtualFile";
@@ -127,8 +163,11 @@ namespace StarEngine.Archive
             graph.WriteGraph(w);
 
             var wd = new byte[ms.Position];
+            ms.Seek(0, SeekOrigin.Begin);
             ms.Read(wd, 0, wd.Length);
             Console.WriteLine("GraphSize:" + wd.Length + " bytes.");
+            ge.RawData = wd;
+            ge.Size = wd.Length;
             ms.Flush();
             w.Flush();
             ms.Dispose();
@@ -206,6 +245,52 @@ namespace StarEngine.Archive
             }
 
         }
+        public void LinkGraphImg(Scene.GraphNode node)
+        {
+            foreach(var img in Enteries)
+            {
+                if(img.Path == node.ImgLinkName)
+                {
+                    if(img.Loaded == false)
+                    {
+                        Load(img);
+                    }
+                    node.ImgFrame = new Tex.Tex2D(img, true);
+                }
+            }
+            foreach(var n in node.Nodes)
+            {
+                LinkGraphImg(n);
+            }
+        }
+        public Scene.SceneGraph GetGraph(string name)
+        {
+            Console.WriteLine("Searching for graph:" + name);
+            foreach(var e in Enteries)
+            {
+                Console.WriteLine("E:" + e.Name + " Start:" + e.Start + " Size:" + e.Size + " P:" + e.Path);
+                if (e.Name == name) 
+                {
+                    Console.WriteLine("Found Graph:" + name);
+                    var ng = new Scene.SceneGraph();
+                    Load(e);
+                    var ms = new MemoryStream(e.RawData);
+                    BinaryReader r = new BinaryReader(ms);
+                 //   Console.WriteLine("Reading Graph.");
+                    ng.ReadGraph(r);
+                  //  Console.WriteLine("Read.");
+                    ms.Close();
+                    r = null;
+                    ms = null;
+
+                    LinkGraphImg(ng.Root);
+                    return ng;
+
+
+                }
+            }
+            return null;
+        }
        public Tex.Tex2D GetTex(string name)
         {
             var e = GetEntry(name);
@@ -252,11 +337,14 @@ namespace StarEngine.Archive
                 {
                     if (v.Compressed == false)
                     {
+                        int ol = v.RawData.Length;
                         byte[] od = null;
                         ZLib.CompressData(v.RawData, out od);
                         v.RawData = od;
                         v.Size = od.Length;
                         v.Compressed = true;
+                        int nl = v.RawData.Length;
+                        Console.WriteLine("E:" + v.Name + " Old:" + ol + " New:" + nl);
                     }
                 }
 
@@ -365,6 +453,11 @@ namespace StarEngine.Archive
     }
     public class VirtualEntry
     {
+        public EntryType Type
+        {
+            get;
+            set;
+        }
         public int[] Par = new int[16];
         public string Name
         {
@@ -413,6 +506,7 @@ namespace StarEngine.Archive
             Name = "";
             Path = "";
             Compressed = false;
+            Type = EntryType.Index;
         }
         public byte[] ToBytes()
         {
@@ -422,5 +516,9 @@ namespace StarEngine.Archive
     public class VirtualFile : VirtualEntry
     {
         
+    }
+    public enum EntryType
+    {
+        Index,Ref
     }
 }

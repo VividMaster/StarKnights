@@ -94,6 +94,8 @@ namespace EditCinima
             EditGraph.X = EditGraph.X + mxi / EditGraph.Z;
             EditGraph.Y = EditGraph.Y + myi / EditGraph.Z;
             EditGraph.Z = EditGraph.Z + (mzi*0.3f) / EditGraph.Z;
+            if (EditGraph.Z < 0.1f) EditGraph.Z = 0.1f;
+            if (EditGraph.Z > 5.0f) EditGraph.Z = 5.0f;
 
             mxi = mxi * mdrag;
             myi = myi * mdrag;
@@ -731,6 +733,29 @@ namespace EditCinima
             {
                 ScanScene(s, UT, n2);
             }
+        }
+
+        private void loadPayloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateTick.Enabled = false;
+            while (render)
+            {
+
+            }
+            UpdateTick.Enabled = false;
+            BrowseFile.DefaultExt = ".toc";
+            BrowseFile.ShowDialog();
+            VirtualFileSystem gfs = new VirtualFileSystem();
+            gfs.ReadToc(BrowseFile.FileName);
+            Console.WriteLine("Read Toc");
+            EditGraph = gfs.GetGraph("Universe Root");
+
+            //var ng = new SceneGraph();
+            //ng.Load(BrowseFile.FileName);
+            //EditGraph = ng;
+
+            SyncUI();
+            UpdateTick.Enabled = true;
         }
 
         private void UI2_DragEnter(object sender, DragEventArgs e)

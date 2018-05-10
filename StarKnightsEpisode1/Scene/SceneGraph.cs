@@ -319,15 +319,24 @@ namespace StarEngine.Scene
         }
         public void Load(string path)
         {
-     
+
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             BinaryReader r = new BinaryReader(fs);
+            ReadGraph(r);
+            Root.Read(r);
+            fs.Close();
+            r = null;
+            fs = null;
+        }
+
+        public void ReadGraph(BinaryReader r)
+        {
             X = r.ReadSingle();
             Y = r.ReadSingle();
             Z = r.ReadSingle();
             Rot = r.ReadSingle();
             int lc = r.ReadInt32();
-            for(int i = 0; i < lc; i++)
+            for (int i = 0; i < lc; i++)
             {
                 var nl = new GraphLight();
                 nl.Read(r);
@@ -336,10 +345,8 @@ namespace StarEngine.Scene
             Root = new GraphNode();
             Root.Graph = this;
             Root.Read(r);
-            fs.Close();
-            r = null;
-            fs = null;
         }
+
         public void Save(string path)
         {
             FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
@@ -350,7 +357,7 @@ namespace StarEngine.Scene
             w = null;
             fs = null;
         }
-
+       
         public  void WriteGraph(BinaryWriter w)
         {
             w.Write(X);
@@ -362,6 +369,7 @@ namespace StarEngine.Scene
             {
                 l.Write(w);
             }
+
             Root.Write(w);
         }
     }

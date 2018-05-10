@@ -273,6 +273,7 @@ namespace StarEngine.Scene
         {
 
         }
+        public string ImgLinkName = "";
         public void Read(BinaryReader r)
         {
             X = r.ReadSingle();
@@ -285,12 +286,16 @@ namespace StarEngine.Scene
             {
                 bool alpha = r.ReadBoolean();
                 var tp = r.ReadString();
-  
-               
-                    ImgFrame = new Tex.Tex2D(tp, alpha);
+                var tn = r.ReadString();
+                ImgLinkName = tp;
+            //    Console.WriteLine("TN:" + tn + " TP:" + tp);
+                //    ImgFrame = new Tex.Tex2D(tp, alpha);
              
+
             }
+       
             int nc = r.ReadInt32();
+
             for(int i = 0; i < nc; i++)
             {
                 var nn = new GraphNode();
@@ -314,12 +319,15 @@ namespace StarEngine.Scene
                 w.Write(true);
                 w.Write(ImgFrame.Alpha);
                 w.Write(ImgFrame.Path);
+                w.Write(ImgFrame.Name);
             }
             else
             {
                 w.Write(false);
             }
+        
             w.Write(Nodes.Count);
+       
             foreach(var n in Nodes)
             {
                 n.Write(w);
