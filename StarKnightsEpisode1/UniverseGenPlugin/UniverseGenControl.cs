@@ -112,7 +112,7 @@ namespace UniverseGen
                 sn.X = x;
                 sn.Y = y;
                 sn.Rot = r.Next(0, 360);
-                sn.Z = 0.1f + (float)r.NextDouble() * 1.2f;
+                sn.Z = 0.1f + (float)r.NextDouble() * 0.4f;
                 sn.Name = "BgStar" + i.ToString();
                 sn.ImgFrame = BgStarImg[r.Next(0, BgStarImg.Length - 1)];
                 uniscene.Root.Nodes.Add(sn);
@@ -127,7 +127,7 @@ namespace UniverseGen
                 var gn = new GraphNode();
                 gn.X = x;
                 gn.Y = y;
-                gn.Z = 0.3f + (float)r.NextDouble() * 1.5f;
+                gn.Z = 0.8f + (float)r.NextDouble() * 1.5f;
                 gn.Rot = r.Next(0, 360);
                 gn.Name = "Galaxy:" + i;
                 gn.ImgFrame = GalImg[r.Next(0, GalImg.Length - 1)];
