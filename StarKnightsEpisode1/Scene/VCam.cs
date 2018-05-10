@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using Vivid.App;
-namespace Vivid.Scene
+using StarEngine.App;
+namespace StarEngine.Scene
 {
-    public class VCam : VSceneNode
+    public class GraphCam3D : GraphNode3D
     {
         public Vector3 LR = new Vector3(0, 0, 0);
         public Matrix4 ProjMat
@@ -56,7 +56,7 @@ namespace Vivid.Scene
         public bool AlphaTest = false;
         public bool CullFace = true;
         public float MinZ = 1f, MaxZ = 700;
-        public VCam()
+        public GraphCam3D()
         {
            
         }

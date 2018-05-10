@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vivid.Effect
+namespace StarEngine.Effect
 {
     public class VEMultiPass : VEffect
     {

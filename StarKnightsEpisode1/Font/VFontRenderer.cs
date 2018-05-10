@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Draw;
-using Vivid.Texture;
+using StarEngine.Draw;
+using StarEngine.Texture;
 using OpenTK;
-namespace Vivid.Font
+namespace StarEngine.Font
 {
     public class VFontRenderer
     {

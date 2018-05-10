@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Graphics;
-using Vivid.Effect;
-using Vivid.Texture;
-using Vivid.App;
-namespace Vivid.Draw
+using StarEngine.Effect;
+using StarEngine.Texture;
+using StarEngine.App;
+namespace StarEngine.Draw
 {
     public class VEQuad : VEffect
     {
@@ -254,7 +254,7 @@ namespace Vivid.Draw
                     break;
                 case VBlend.Alpha:
                     GL.Enable(EnableCap.Blend);
-                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                     break;
             }
             

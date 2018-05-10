@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vivid.Texture
+namespace StarEngine.Texture
 {
     public enum Format
     {

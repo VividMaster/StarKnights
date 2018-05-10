@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Data;
-using Vivid.Effect;
-namespace Vivid.Visuals
+using StarEngine.Data;
+using StarEngine.Effect;
+namespace StarEngine.Visuals
 {
     public class VRLMultiPass : VRenderLayer
     {

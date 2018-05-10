@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.UI;
-using Vivid.App;
-namespace Vivid.UI.UIWidgets
+using StarEngine.UI;
+using StarEngine.App;
+namespace StarEngine.UI.UIWidgets
 {
     public class UIGroup : UIWidget
     {

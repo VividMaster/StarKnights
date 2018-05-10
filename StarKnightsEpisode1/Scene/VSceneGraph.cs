@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Lighting;
+using StarEngine.Lighting;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-namespace Vivid.Scene
+namespace StarEngine.Scene
 {
-    public class VSceneGraph
+    public class SceneGraph3D
     {
-        public List<VSceneNode> Nodes = new List<VSceneNode>();
-        public List<VCam> Cams = new List<VCam>();
+        public List<GraphNode3D> Nodes = new List<GraphNode3D>();
+        public List<GraphCam3D> Cams = new List<GraphCam3D>();
         public List<VLight> Lights = new List<VLight>();
-        public VCam CamOverride = null;
-        public virtual void Add(VCam c)
+        public GraphCam3D CamOverride = null;
+        public virtual void Add(GraphCam3D c)
         {
             Cams.Add(c);
         }
@@ -22,7 +22,7 @@ namespace Vivid.Scene
         {
             Lights.Add(l);
         }
-        public virtual void Add(VSceneNode n)
+        public virtual void Add(GraphNode3D n)
         {
             Nodes.Add(n);
         }

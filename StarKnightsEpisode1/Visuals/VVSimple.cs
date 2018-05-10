@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Data;
+using StarEngine.Data;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-namespace Vivid.Visuals
+namespace StarEngine.Visuals
 {
     public class VVSimple : VVisualizer
     {

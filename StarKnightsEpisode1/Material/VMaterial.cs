@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Texture;
-namespace Vivid.Material
+using StarEngine.Texture;
+namespace StarEngine.Material
 {
     public class VMaterial
     {

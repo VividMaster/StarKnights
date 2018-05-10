@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Scene;
+using StarEngine.Scene;
 using OpenTK;
 using OpenTK.Graphics;
-using Vivid.FrameBuffer;
+using StarEngine.FrameBuffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-namespace Vivid.Enviro
+namespace StarEngine.Enviro
 {
     public class VEnvRenderer
     {
-        public VSceneGraph Scene;
-        public VCam Cam = new VCam();
+        public SceneGraph3D Scene;
+        public GraphCam3D Cam = new GraphCam3D();
         public Vector3 Pos = Vector3.Zero;
         public VFrameBufferCube FB = null;
         public VEnvRenderer(int w,int h)

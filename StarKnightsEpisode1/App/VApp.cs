@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Vivid.State;
-using Vivid.Draw;
-using Vivid.Import;
+
+using StarEngine.Draw;
+using StarEngine.Import;
 using OpenTK.Input;
-using Vivid.Input;
-namespace Vivid.App
+using StarEngine.Input;
+namespace StarEngine.App
 {
     public static class AppInfo
     {
@@ -42,13 +42,7 @@ namespace Vivid.App
             AppInfo.Full = false;
             AppInfo.App = "GLApp";
             VImport.RegDefaults();
-            for (int i = 0; i < 32; i++)
-            {
-                VInput.MB[i] = false;
-            }
-            VPen.InitDraw();
-            VInput.InitInput();
-            Vivid.Sound.VSoundSys.Init();
+          
             GL.Viewport(0, 0, w, h);
             GL.Scissor(0, 0,w,h);
             GL.Disable(EnableCap.Blend);
@@ -72,27 +66,13 @@ namespace Vivid.App
         public static VApp Link = null;
         private string _Title = "";
         private OpenTK.Graphics.Color4 _BgCol = OpenTK.Graphics.Color4.Black;
-        public VStateManager Stater = new VStateManager();
+
         public VApp()
         {
 
         }
-        public void CleanStates()
-        {
-            Stater = new VStateManager();
-        }
-        public void PushState(VAppState state)
-        {
-            Stater.PushState(state);
-        }
-        public void PopState()
-        {
-            Stater.PopState();
-        }
-        public void AddConState(VAppState state)
-        {
-            Stater.AddConState(state);
-        }
+  
+      
         public OpenTK.Graphics.Color4 BgCol
         {
             get { return _BgCol; }
@@ -127,19 +107,13 @@ namespace Vivid.App
             AppInfo.Full = full;
             AppInfo.App = app;
             VImport.RegDefaults();
-         for(int i = 0; i < 32; i++)
-            {
-                VInput.MB[i] = false;
-            }
-            VPen.InitDraw();
-            VInput.InitInput();
-            Vivid.Sound.VSoundSys.Init();
+   
         }
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             int bid = 0;
             bid = GetBID(e);
-            VInput.MB[bid] = true;
+         
         }
 
         private static int GetBID(MouseButtonEventArgs e)
@@ -164,43 +138,18 @@ namespace Vivid.App
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             int bid = GetBID(e);
-            VInput.MB[bid] = false;
         }
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-            VInput.MX = e.X;
-            VInput.MY = e.Y;
-            VInput.MZ = e.Mouse.Wheel;
-            VInput.MDX = e.XDelta;
-            VInput.MDY = e.YDelta;
+
         }
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
-            if(e.Key == Key.ShiftLeft || e.Key == Key.ShiftRight)
-            {
-                VInput.ShiftIn = true;
-                return;
-            }
-            if(VInput.Keys.ContainsKey(e.Key))
-            {
-
-            }
-            else
-            {
-                VInput.Keys.Add(e.Key, true);
-            }
+    
         }
         protected override void OnKeyUp(KeyboardKeyEventArgs e)
         {
-            if (e.Key == Key.ShiftLeft || e.Key == Key.ShiftRight)
-            {
-                VInput.ShiftIn = false;
-                return;
-            }
-            if (VInput.Keys.ContainsKey(e.Key))
-            {
-                VInput.Keys.Remove(e.Key);
-            }
+        
         }
         protected override void OnResize(EventArgs e)
         {
@@ -241,10 +190,7 @@ namespace Vivid.App
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Sound.VSoundSys.Update();
-            Stater.Update();
-            VInput.MDX = 0;
-            VInput.MDY = 0;
+          
         }
         public int fpsL=0, fps=0, frames=0;
 
@@ -269,7 +215,7 @@ namespace Vivid.App
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 
-            Stater.SmartRender();
+       
 
             SwapBuffers();
         }

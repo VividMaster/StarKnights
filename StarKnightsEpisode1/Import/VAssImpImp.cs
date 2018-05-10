@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Scene;
+using StarEngine.Scene;
 using Assimp;
 using Assimp.Configs;
-using Vivid.Data;
+using StarEngine.Data;
 using System.IO;
 
-namespace Vivid.Import
+namespace StarEngine.Import
 {
     public class VAssImpImp : VImporter
     {
         public static string IPath = "";
-        public override VSceneNode LoadNode(string path)
+        public override GraphNode3D LoadNode(string path)
         {
-            VSceneEntity root = new VSceneEntity();
+            GraphEntity3D root = new GraphEntity3D();
             string file = path;
      
             var e = new Assimp.AssimpContext();
@@ -106,13 +106,13 @@ namespace Vivid.Import
             ProcessNode(root, s.RootNode, ml2);
          
  
-            return root as VSceneNode;
+            return root as GraphNode3D;
         }
 
-        private void ProcessNode(VSceneEntity root, Assimp.Node s,List<VMesh> ml)
+        private void ProcessNode(GraphEntity3D root, Assimp.Node s,List<VMesh> ml)
         {
 
-            VSceneEntity r1 = new VSceneEntity();
+            GraphEntity3D r1 = new GraphEntity3D();
             root.Sub.Add(r1);
             r1.Top = root;
             r1.Name = s.Name;

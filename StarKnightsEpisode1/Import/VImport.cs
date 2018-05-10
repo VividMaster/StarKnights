@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Scene;
+using StarEngine.Scene;
 using System.IO;
-namespace Vivid.Import
+namespace StarEngine.Import
 {
     public static class VImport
     {
@@ -30,7 +30,7 @@ namespace Vivid.Import
             }
             return null;
         }
-        public static VSceneNode ImportNode(string path)
+        public static GraphNode3D ImportNode(string path)
         {
             string key = new FileInfo(path).Extension;
             var imp = Imports[key];

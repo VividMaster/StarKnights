@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Vivid.Texture;
-using Vivid.App;
-namespace Vivid.FrameBuffer
+using StarEngine.Texture;
+using StarEngine.App;
+namespace StarEngine.FrameBuffer
 {
     public class VFrameBuffer
     {

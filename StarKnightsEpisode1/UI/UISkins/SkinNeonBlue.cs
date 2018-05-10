@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.UI;
-using Vivid.Texture;
-using Vivid.Draw;
-using Vivid.App;
-using Vivid.UI.UIWidgets;
-using Vivid.Font;
+using StarEngine.UI;
+using StarEngine.Texture;
+using StarEngine.Draw;
+using StarEngine.App;
+using StarEngine.UI.UIWidgets;
+using StarEngine.Font;
 using OpenTK;
-namespace Vivid.UI.UISkins
+namespace StarEngine.UI.UISkins
 {
     public class SkinNeonBlue : UISkin 
     {

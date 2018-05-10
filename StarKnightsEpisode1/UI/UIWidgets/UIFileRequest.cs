@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.App;
-using Vivid.Texture;
+using StarEngine.App;
+using StarEngine.Texture;
 using System.IO;
-namespace Vivid.UI.UIWidgets
+namespace StarEngine.UI.UIWidgets
 {
     public delegate void SelectFile(string f);
     public class UIFileRequest : UIWindow

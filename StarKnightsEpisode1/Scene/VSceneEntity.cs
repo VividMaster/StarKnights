@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Data;
-using Vivid.Visuals;
+using StarEngine.Data;
+using StarEngine.Visuals;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-namespace Vivid.Scene
+namespace StarEngine.Scene
 {
-    public class VSceneEntity : VSceneNode
+    public class GraphEntity3D : GraphNode3D
     {
         public VRenderer Renderer = null;
         public List<VMesh> Meshes = new List<VMesh>();
@@ -26,7 +26,7 @@ namespace Vivid.Scene
             Meshes = new List<VMesh>();
             Renderer = null;
         }
-        public override void PresentDepth(VCam c)
+        public override void PresentDepth(GraphCam3D c)
         {
             SetMats(c);
             Bind();
@@ -39,7 +39,7 @@ namespace Vivid.Scene
                 s.PresentDepth(c);
             }
         }
-        public override void Present(VCam c)
+        public override void Present(GraphCam3D c)
         {
             //  GL.MatrixMode(MatrixMode.Projection);
             // GL.LoadMatrix(ref c.ProjMat);
@@ -55,7 +55,7 @@ namespace Vivid.Scene
             }
         }
 
-        private void SetMats(VCam c)
+        private void SetMats(GraphCam3D c)
         {
             Effect.FXG.Proj = c.ProjMat;
             Effect.FXG.Cam = c;

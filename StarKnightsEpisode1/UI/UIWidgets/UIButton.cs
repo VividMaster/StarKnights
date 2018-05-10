@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.UI;
-using Vivid.Input;
-namespace Vivid.UI.UIWidgets
+using StarEngine.UI;
+using StarEngine.Input;
+namespace StarEngine.UI.UIWidgets
 {
     public delegate void Drag(int x,int y);
     public delegate void Clicked();

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.UI.UIWidgets;
-using Vivid.Font;
+using StarEngine.UI.UIWidgets;
+using StarEngine.Font;
 using OpenTK;
 using OpenTK.Input;
-namespace Vivid.UI
+namespace StarEngine.UI
 {
     public enum UIMouseButton
     {

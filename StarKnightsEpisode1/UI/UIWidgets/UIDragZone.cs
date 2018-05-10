@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Input;
-namespace Vivid.UI.UIWidgets
+using StarEngine.Input;
+namespace StarEngine.UI.UIWidgets
 {
     public class UIDragZone : UIWidget
     {

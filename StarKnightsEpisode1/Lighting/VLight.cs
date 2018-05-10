@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Scene;
+using StarEngine.Scene;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-namespace Vivid.Lighting
+namespace StarEngine.Lighting
 {
     public enum LightType
     {
         Ambient,Directional,Point
     }
-    public class VLight : VSceneNode
+    public class VLight : GraphNode3D
     {
         public static VLight Active = null;
         public bool CastShadows = true;

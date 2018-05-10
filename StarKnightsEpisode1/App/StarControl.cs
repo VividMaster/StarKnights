@@ -34,6 +34,7 @@ namespace StarEngine.App
             StarApp.H = H;
             StarApp.RW = W;
             StarApp.RH = H;
+            
         }
         
         public void ResizeGL()

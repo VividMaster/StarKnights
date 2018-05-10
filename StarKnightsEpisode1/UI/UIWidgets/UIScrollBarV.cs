@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vivid.UI.UIWidgets
+namespace StarEngine.UI.UIWidgets
 {
     public class UIScrollBarV : UIWidget
     {
@@ -13,7 +13,7 @@ namespace Vivid.UI.UIWidgets
         {
             get
             {
-                float ay = (Slide._WidY * (float)Vivid.App.AppInfo.H);
+                float ay = (Slide._WidY * (float)StarEngine.App.AppInfo.H);
                 float ey = WidH;
                 float ar = (float)ay / (float)ey;
               

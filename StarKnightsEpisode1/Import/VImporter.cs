@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Scene;
-namespace Vivid.Import
+using StarEngine.Scene;
+namespace StarEngine.Import
 {
     public class VImporter
     {
         public string Ext = "";
-        public virtual VSceneNode LoadNode(string path)
+        public virtual GraphNode3D LoadNode(string path)
         {
             return null;
         }
-        public virtual VSceneGraph LoadScene(string path)
+        public virtual SceneGraph3D LoadScene(string path)
         {
 
             return null;

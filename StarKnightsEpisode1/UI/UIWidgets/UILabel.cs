@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vivid.UI.UIWidgets
+namespace StarEngine.UI.UIWidgets
 {
     public class UILabel : UIWidget
     {

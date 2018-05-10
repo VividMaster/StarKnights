@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Texture;
+using StarEngine.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Vivid.App;
-namespace Vivid.FrameBuffer
+using StarEngine.App;
+namespace StarEngine.FrameBuffer
 {
     public class VFrameBufferCube
     {

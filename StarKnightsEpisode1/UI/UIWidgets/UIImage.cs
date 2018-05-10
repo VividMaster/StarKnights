@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Texture;
+using StarEngine.Texture;
 using OpenTK;
-namespace Vivid.UI.UIWidgets
+namespace StarEngine.UI.UIWidgets
 {
     public class UIImage : UIWidget
     {

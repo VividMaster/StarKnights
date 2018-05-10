@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Scene;
-using Vivid.Data;
-using Vivid.Material;
-using Vivid.Effect;
-using Vivid.FrameBuffer;
+using StarEngine.Scene;
+using StarEngine.Data;
+using StarEngine.Material;
+using StarEngine.Effect;
+using StarEngine.FrameBuffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-namespace Vivid.PostProcess
+namespace StarEngine.PostProcess
 {
     public class VPostProcessRenderer
     {
-        public VSceneGraph Scene = null;
+        public SceneGraph3D Scene = null;
         public List<VPostProcess> Processes = new List<VPostProcess>();
         public VFrameBuffer FB = null;
         public VFrameBuffer FB2 = null;
@@ -29,7 +29,7 @@ namespace Vivid.PostProcess
             QFX = new VEQuadR();
             GenQuad();
         }
-        public void SetScene(VSceneGraph s)
+        public void SetScene(SceneGraph3D s)
         {
             Scene = s;
         }

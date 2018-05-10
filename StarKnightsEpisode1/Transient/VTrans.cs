@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-namespace Vivid.Transient
+namespace StarEngine.Transient
 {
     public delegate void Process();
     public class VTransient

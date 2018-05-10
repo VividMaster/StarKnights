@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Data;
+using StarEngine.Data;
 using OpenTK;
-namespace Vivid.Scene
+namespace StarEngine.Scene
 {
     public enum Space
     {
         Local,World
     }
-    public class VSceneNode
+    public class GraphNode3D
     {
         public bool On = true;
         public string Name = "";
@@ -40,17 +40,17 @@ namespace Vivid.Scene
                 {
                     r = Top.World * r;
                 }
-                r = Matrix4.Scale(LocalScale) * LocalTurn * r;
+                r = LocalTurn * r;
 
        
                 return r;
             }
         }
    
-        public VSceneNode Top = null;
-        public List<VSceneNode> Sub = new List<VSceneNode>();
+        public GraphNode3D Top = null;
+        public List<GraphNode3D> Sub = new List<GraphNode3D>();
         public VInfoMap<string, object> Links = new VInfoMap<string, object>();
-        public VSceneNode()
+        public GraphNode3D()
         {
             Init();
         }
@@ -99,7 +99,7 @@ namespace Vivid.Scene
 
             }
         }
-        public void LookAt(VSceneNode n)
+        public void LookAt(GraphNode3D n)
         {
             LookAt(n.WorldPos, new Vector3(0, 1, 0));
         }
@@ -113,11 +113,11 @@ namespace Vivid.Scene
             Matrix4 m = Matrix4.LookAt(Vector3.Zero, p, up);
             LocalTurn = m;
         }
-        public virtual void PresentDepth(VCam c)
+        public virtual void PresentDepth(GraphCam3D c)
         {
 
         }
-        public virtual void Present(VCam c)
+        public virtual void Present(GraphCam3D c)
         {
 
         }

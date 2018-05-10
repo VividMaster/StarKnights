@@ -11,6 +11,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,8 +57,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AssimpNet, Version=3.3.2.0, Culture=neutral, PublicKeyToken=3edc10cb77b1bca2, processorArchitecture=MSIL">
+      <HintPath>packages\AssimpNet.3.3.2\lib\net45\AssimpNet.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary, Version=3.28.4.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>packages\CS-Script.bin.3.28.4.0\lib\net46\CSScriptLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="irrKlang.NET4">
+      <HintPath>.\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.CodeAnalysis.Common.2.0.0\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
@@ -80,7 +88,7 @@
       <HintPath>packages\OpenTK.3.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>packages\OpenTK.GLControl.3.0.0-pre\lib\net20\OpenTK.GLControl.dll</HintPath>
+      <HintPath>packages\OpenTK.GLControl.3.0.0\lib\net20\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -170,6 +178,7 @@
     <Compile Include="App\StarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="App\VApp.cs" />
     <Compile Include="Archive\VirtualFileSystem.cs" />
     <Compile Include="Archive\ZLib.cs" />
     <Compile Include="Cam\VCam.cs" />
@@ -177,6 +186,7 @@
     <Compile Include="Data\VMesh.cs" />
     <Compile Include="Data\VVertex3D.cs" />
     <Compile Include="Data\VVertexData.cs" />
+    <Compile Include="Draw\Pen.cs" />
     <Compile Include="Draw\Render.cs" />
     <Compile Include="Effect\FXG.cs" />
     <Compile Include="Effect\VEDepth.cs" />
@@ -194,6 +204,7 @@
     <Compile Include="Import\VImport.cs" />
     <Compile Include="Import\VImporter.cs" />
     <Compile Include="Input\AppInput.cs" />
+    <Compile Include="Input\VInput.cs" />
     <Compile Include="Lighting\VLight.cs" />
     <Compile Include="Material\VMaterial.cs" />
     <Compile Include="Math\Maths.cs" />
@@ -221,6 +232,7 @@
     <Compile Include="Scripting.evaluator.cs" />
     <Compile Include="Scripting.Extensions.cs" />
     <Compile Include="Scripting.native.cs" />
+    <Compile Include="Sound\VSoundSys.cs" />
     <Compile Include="Texture\VTex2D.cs" />
     <Compile Include="Texture\VTexBase.cs" />
     <Compile Include="Texture\VTexCube.cs" />
@@ -281,4 +293,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\AssimpNet.3.3.2\build\AssimpNet.targets" Condition="Exists('packages\AssimpNet.3.3.2\build\AssimpNet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\AssimpNet.3.3.2\build\AssimpNet.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\AssimpNet.3.3.2\build\AssimpNet.targets'))" />
+  </Target>
 </Project>

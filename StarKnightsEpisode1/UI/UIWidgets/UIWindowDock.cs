@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vivid.Font;
-using Vivid.Visuals;
-using Vivid.Draw;
-namespace Vivid.UI.UIWidgets
+using StarEngine.Font;
+using StarEngine.Visuals;
+using StarEngine.Draw;
+namespace StarEngine.UI.UIWidgets
 {
     public class UIWindowDock : UIWidget
     {
@@ -55,7 +55,7 @@ namespace Vivid.UI.UIWidgets
             else
             {
                 VPen.Rect(WidX, WidY, WidW, 50, new OpenTK.Vector4(0, 0, 0.5f, 0.35f));
-                if (Vivid.Input.VInput.MB[0] == false && UISys.ActiveWindow.Docked == false)
+                if (StarEngine.Input.VInput.MB[0] == false && UISys.ActiveWindow.Docked == false)
                 {
                     DockWin();
                 }
