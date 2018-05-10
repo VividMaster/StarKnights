@@ -28,20 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.FileBox = new System.Windows.Forms.ListBox();
-            this.starButton1 = new StarControls.StarButton();
             this.BrowseFile = new System.Windows.Forms.OpenFileDialog();
             this.BrowseFolder = new System.Windows.Forms.FolderBrowserDialog();
+            this.BrowseSave = new System.Windows.Forms.SaveFileDialog();
+            this.FileBox = new System.Windows.Forms.ListBox();
+            this.starButton1 = new StarControls.StarButton();
             this.starButton2 = new StarControls.StarButton();
             this.starButton3 = new StarControls.StarButton();
             this.starButton4 = new StarControls.StarButton();
-            this.BrowseSave = new System.Windows.Forms.SaveFileDialog();
             this.starButton5 = new StarControls.StarButton();
             this.CompressCheck = new System.Windows.Forms.CheckBox();
             this.PrevBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PrevBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // BrowseFile
+            // 
+            this.BrowseFile.FileName = "openFileDialog1";
             // 
             // FileBox
             // 
@@ -60,10 +64,6 @@
             this.starButton1.Size = new System.Drawing.Size(113, 23);
             this.starButton1.TabIndex = 1;
             this.starButton1.ClickButton += new System.EventHandler(this.starButton1_ClickButton);
-            // 
-            // BrowseFile
-            // 
-            this.BrowseFile.FileName = "openFileDialog1";
             // 
             // starButton2
             // 
@@ -152,15 +152,14 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox FileBox;
-        private StarControls.StarButton starButton1;
         private System.Windows.Forms.OpenFileDialog BrowseFile;
         private System.Windows.Forms.FolderBrowserDialog BrowseFolder;
+        private System.Windows.Forms.SaveFileDialog BrowseSave;
+        private System.Windows.Forms.ListBox FileBox;
+        private StarControls.StarButton starButton1;
         private StarControls.StarButton starButton2;
         private StarControls.StarButton starButton3;
         private StarControls.StarButton starButton4;
-        private System.Windows.Forms.SaveFileDialog BrowseSave;
         private StarControls.StarButton starButton5;
         private System.Windows.Forms.CheckBox CompressCheck;
         private System.Windows.Forms.PictureBox PrevBox;
