@@ -9,10 +9,10 @@ namespace StarEngine.Visuals
 {
     public class VRLMultiPass : VRenderLayer
     {
-        public VEMultiPass fx = null;
+        public EMultiPass3D fx = null;
         public override void Init()
         {
-            fx = new VEMultiPass();
+            fx = new EMultiPass3D();
         }
         public override void Render(VMesh m, VVisualizer v)
         {

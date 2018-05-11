@@ -11,7 +11,7 @@ using StarEngine.Texture;
 using StarEngine.App;
 namespace StarEngine.Draw
 {
-    public class VEQuad : VEffect
+    public class VEQuad : Effect3D
     {
         public VEQuad() : base("", "drawVS.txt", "drawFS.txt")
         {

@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL4;
 namespace StarEngine.Effect
 {
    
-    public class VEffect
+    public class Effect3D
     {
         public Matrix4 LocalMat = Matrix4.Identity;
         public Matrix4 ProjMat = Matrix4.Identity;
@@ -54,7 +54,7 @@ namespace StarEngine.Effect
         {
             GL.Uniform1(GL.GetUniformLocation(_Program, n), v ? 1 : 0);
         }
-        public VEffect(string geo="",string vert="",string pix="")
+        public Effect3D(string geo="",string vert="",string pix="")
         {
             _GShader = geo;
             _VShader = vert;
@@ -62,7 +62,7 @@ namespace StarEngine.Effect
             InitShaders();
         }
 
-        ~VEffect()
+        ~Effect3D()
         {
 
          //   GL.DeleteProgram(_Program);

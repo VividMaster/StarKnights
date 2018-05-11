@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StarEngine.Effect
 {
-    public class VEDepth : VEffect
+    public class EDepth3D : Effect3D
     {
-        public VEDepth() : base("","vsDepth.txt","fsDepth.txt")
+        public EDepth3D() : base("","Data/Shader/vsDepth.txt","Data/Shader/fsDepth.txt")
         {
 
         }

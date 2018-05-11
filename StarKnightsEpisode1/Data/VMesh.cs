@@ -14,7 +14,7 @@ namespace StarEngine.Data
         public string Name = "NoName";
         public VVertex3D Data = null;
         public uint[] Indices = null;
-        public VMaterial Mat = null;
+        public Material3D Mat = null;
         public int NumVertices
         {
             get

@@ -24,6 +24,9 @@ using StarEngine.Reflect;
 using System.Reflection;
 using StarEngine.Archive;
 using StarKnightGameplay;
+using StarEngine.PostProcess;
+using StarEngine.Import;
+using StarEngine.Material;
 namespace EditCinima
 {
     partial class EditCine
@@ -63,8 +66,32 @@ namespace EditCinima
             UpdateTick.Enabled = true;
             int ems = Environment.TickCount;
             Console.WriteLine("StartUp Time:" + (float)(ems - sms) / 1000.0f);
+
+            Setup3D();
+
         }
 
+        private void Setup3D()
+        {
+            Console.WriteLine("Setting up 3D test.");
+            Import.RegDefaults();
+            Console.WriteLine("Setting up post-processing.");
+            ppRen = new StarEngine.PostProcess.PostProcessRender(512, 512);
+            Console.WriteLine("Creating 3D Scene graph.");
+            scene3d = new SceneGraph3D();
+
+            ppRen.Scene = scene3d;
+
+            Console.WriteLine("Importing mesh.");
+            ent1 = Import.ImportNode("Data\\3D\\earth2.3ds");
+            Console.WriteLine("Set up.");
+            var mat1 = new Material3D();
+            Console.WriteLine("Loading texture.");
+            mat1.TCol = new Tex2D("Data\\3D\\planetmap.png");
+            Console.WriteLine("Loaded.");
+
+
+        }
 
         private void EditCine_Resize(object sender, EventArgs e)
         {

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace StarEngine.Effect
 {
-    public class VEMultiPass : VEffect
+    public class EMultiPass3D : Effect3D
     {
-        public VEMultiPass() : base("", "vsMP1.txt", "fsMP1.txt")
+        public EMultiPass3D() : base("", "Data/Shader/vsMP1.txt", "Data/Shader/fsMP1.txt")
         {
 
         }
         public override void SetPars()
         {
-            if (Material.VMaterial.Active.TCol != null)
+            if (Material.Material3D.Active.TCol != null)
             {
                 SetBool("eC", true);
             }
@@ -22,7 +22,7 @@ namespace StarEngine.Effect
             {
                 SetBool("eC", false);
             }
-            if(Material.VMaterial.Active.TNorm != null)
+            if(Material.Material3D.Active.TNorm != null)
             {
                 SetBool("eN", true);
             }
@@ -30,7 +30,7 @@ namespace StarEngine.Effect
             {
                 SetBool("eN", false);
             }
-            if (Material.VMaterial.Active.TEnv != null)
+            if (Material.Material3D.Active.TEnv != null)
             {
                 SetBool("eE", true);
             }
@@ -44,13 +44,13 @@ namespace StarEngine.Effect
             SetMat("cam",OpenTK.Matrix4.Invert(OpenTK.Matrix4.CreateTranslation(FXG.Cam.WorldPos)) * FXG.Cam.CamWorld );
             SetMat("proj", FXG.Cam.ProjMat);
             SetVec3("camP", FXG.Cam.WorldPos);
-            SetVec3("lP", Lighting.VLight.Active.WorldPos);
-            SetVec3("lC", Lighting.VLight.Active.Diff);
-            SetFloat("atten", Lighting.VLight.Active.Atten);
-            SetFloat("ambCE", Lighting.VLight.Active.AmbCE);
-            SetFloat("matS", Material.VMaterial.Active.Shine);
-            SetVec3("matSpec", Material.VMaterial.Active.Spec);
-            SetFloat("envS", Material.VMaterial.Active.envS);
+            SetVec3("lP", Lighting.GraphLight3D.Active.WorldPos);
+            SetVec3("lC", Lighting.GraphLight3D.Active.Diff);
+            SetFloat("atten", Lighting.GraphLight3D.Active.Atten);
+            SetFloat("ambCE", Lighting.GraphLight3D.Active.AmbCE);
+            SetFloat("matS", Material.Material3D.Active.Shine);
+            SetVec3("matSpec", Material.Material3D.Active.Spec);
+            SetFloat("envS", Material.Material3D.Active.envS);
             SetTex("tC", 0);
             SetTex("tN", 1);
             SetTex("tE", 2);

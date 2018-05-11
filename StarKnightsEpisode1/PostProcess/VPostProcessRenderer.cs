@@ -12,7 +12,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 namespace StarEngine.PostProcess
 {
-    public class VPostProcessRenderer
+    public class PostProcessRender
     {
         public SceneGraph3D Scene = null;
         public List<VPostProcess> Processes = new List<VPostProcess>();
@@ -20,7 +20,7 @@ namespace StarEngine.PostProcess
         public VFrameBuffer FB2 = null;
         public int IW, IH;
         public VEQuadR QFX = null;
-        public VPostProcessRenderer(int w,int h)
+        public PostProcessRender(int w,int h)
         {
             IW = w;
             IH = h;
@@ -109,9 +109,9 @@ namespace StarEngine.PostProcess
 
         }
     }
-    public class VEQuadR : VEffect
+    public class VEQuadR : Effect3D
     {
-        public VEQuadR() : base("","passVS.txt","passFS.txt")
+        public VEQuadR() : base("","Data/Shader/passVS.txt","Data/Shader/passFS.txt")
         {
 
         }

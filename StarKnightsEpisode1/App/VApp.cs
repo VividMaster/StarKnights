@@ -41,7 +41,7 @@ namespace StarEngine.App
             AppInfo.RH = h;
             AppInfo.Full = false;
             AppInfo.App = "GLApp";
-            VImport.RegDefaults();
+            Import.Import.RegDefaults();
           
             GL.Viewport(0, 0, w, h);
             GL.Scissor(0, 0,w,h);
@@ -106,7 +106,7 @@ namespace StarEngine.App
             AppInfo.RH = height;
             AppInfo.Full = full;
             AppInfo.App = app;
-            VImport.RegDefaults();
+            Import.Import.RegDefaults();
    
         }
         protected override void OnMouseDown(MouseButtonEventArgs e)

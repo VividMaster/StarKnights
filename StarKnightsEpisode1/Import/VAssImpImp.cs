@@ -11,7 +11,7 @@ using System.IO;
 
 namespace StarEngine.Import
 {
-    public class VAssImpImp : VImporter
+    public class AssImpImport : Importer
     {
         public static string IPath = "";
         public override GraphNode3D LoadNode(string path)
@@ -22,13 +22,25 @@ namespace StarEngine.Import
             var e = new Assimp.AssimpContext();
             var c1 = new Assimp.Configs.NormalSmoothingAngleConfig(45);
             e.SetConfig(c1);
-            var s = e.ImportFile(file, PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.Triangulate | PostProcessSteps.GenerateNormals);
+            Console.WriteLine("Impporting:" + file);
+            Assimp.Scene s = null;
+            try
+            {
+               s = e.ImportFile(file, PostProcessSteps.CalculateTangentSpace | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.Triangulate | PostProcessSteps.GenerateNormals);
+            }
+            catch(AssimpException ae)
+            {
+                Console.WriteLine(ae);
+                Console.WriteLine("Failed to import");
+            }
+                Console.WriteLine("Imported.");
             Dictionary<string, VMesh> ml = new Dictionary<string, VMesh>();
             List<VMesh> ml2 = new List<VMesh>();
+
             foreach (var m in s.Meshes)
             {
 
-                var vm = new Material.VMaterial();
+                var vm = new Material.Material3D();
               
                 var m2 = new VMesh(m.VertexCount, m.GetIndices().Length);
                 ml2.Add(m2);
@@ -48,7 +60,7 @@ namespace StarEngine.Import
                    
                     if(t1.FilePath!=null)
                     {
-                        vm.TCol = new Texture.VTex2D(IPath+t1.FilePath, Texture.LoadMethod.Single);
+                        vm.TCol = new Tex.Tex2D(IPath+t1.FilePath,false);
                         Console.WriteLine("TexLoaded");
                     }
                         if (true)
@@ -69,7 +81,7 @@ namespace StarEngine.Import
                     var n = m.Normals[i];
                     var t = m.TextureCoordinateChannels[0];
                     Vector3D tan, bi;
-                    if (m.Tangents != null)
+                    if (m.Tangents != null && m.Tangents.Count >0)
                     {
 
                         tan = m.Tangents[i];

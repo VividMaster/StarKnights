@@ -12,13 +12,13 @@ namespace StarEngine.Scene
     {
         public List<GraphNode3D> Nodes = new List<GraphNode3D>();
         public List<GraphCam3D> Cams = new List<GraphCam3D>();
-        public List<VLight> Lights = new List<VLight>();
+        public List<GraphLight3D> Lights = new List<GraphLight3D>();
         public GraphCam3D CamOverride = null;
         public virtual void Add(GraphCam3D c)
         {
             Cams.Add(c);
         }
-        public virtual void Add(VLight l)
+        public virtual void Add(GraphLight3D l)
         {
             Lights.Add(l);
         }
@@ -65,7 +65,7 @@ namespace StarEngine.Scene
             {
                 foreach (var l in Lights)
                 {
-                    VLight.Active = l;
+                    GraphLight3D.Active = l;
                     foreach (var n in Nodes)
                     {
                         n.Present(CamOverride);
@@ -78,7 +78,7 @@ namespace StarEngine.Scene
                 {
                     foreach (var l in Lights)
                     {
-                        VLight.Active = l;
+                        GraphLight3D.Active = l;
                         foreach (var n in Nodes)
                         {
                             n.Present(c);

@@ -7,22 +7,22 @@ using StarEngine.Scene;
 using System.IO;
 namespace StarEngine.Import
 {
-    public static class VImport
+    public static class Import
     {
-        public static Dictionary<string, VImporter> Imports = new Dictionary<string, VImporter>();
+        public static Dictionary<string, Importer> Imports = new Dictionary<string, Importer>();
         public static void RegDefaults()
         {
-            RegImp(".3ds", new VAssImpImp());
-            RegImp(".fbx", new VAssImpImp());
-            RegImp(".blend", new VAssImpImp());
-            RegImp(".dae", new VAssImpImp());
-            RegImp(".b3d", new VAssImpImp());
+            RegImp(".3ds", new AssImpImport());
+            RegImp(".fbx", new AssImpImport());
+            RegImp(".blend", new AssImpImport());
+            RegImp(".dae", new AssImpImport());
+            RegImp(".b3d", new AssImpImport());
         }
-        public static void RegImp(string key,VImporter imp)
+        public static void RegImp(string key,Importer imp)
         {
             Imports.Add(key, imp);
         }
-        public static VImporter GetImp(string key)
+        public static Importer GetImp(string key)
         {
             if (Imports.ContainsKey(key))
             {

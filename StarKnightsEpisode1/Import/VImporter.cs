@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using StarEngine.Scene;
 namespace StarEngine.Import
 {
-    public class VImporter
+    public class Importer
     {
         public string Ext = "";
         public virtual GraphNode3D LoadNode(string path)

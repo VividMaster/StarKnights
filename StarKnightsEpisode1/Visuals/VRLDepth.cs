@@ -11,10 +11,10 @@ namespace StarEngine.Visuals
 {
     public class VRLDepth : VRenderLayer
     {
-        public VEDepth fx = null;
+        public EDepth3D fx = null;
         public override void Init()
         {
-            fx = new VEDepth();
+            fx = new EDepth3D();
         }
         public override void Render(VMesh m, VVisualizer v)
         {

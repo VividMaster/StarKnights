@@ -31,7 +31,7 @@ namespace StarEngine.PostProcess.Processes
             bb.Release(0);
         }
     }
-    public class VEBlur : VEffect
+    public class VEBlur : Effect3D
     {
         public float Blur = 0.5f;
         public VEBlur() : base("","blurVS.txt","blurFS.txt")

@@ -24,21 +24,31 @@ using StarEngine.Reflect;
 using System.Reflection;
 using StarEngine.Archive;
 using StarKnightGameplay;
+using StarEngine.Lighting;
+using StarEngine.PostProcess;
 namespace EditCinima
 {
     partial class EditCine
     {
 
+        /// <summary>
+        /// Virtual File System
+        /// </summary>
         public VirtualFileSystem VFS;
+
+        /// <summary>
+        /// UI
+        /// </summary>
+
         public static TabControl UIP;
         public static EditCine Main = null;
         public static string DefScript;
+
         public ScriptName ChooseScriptNAme = null;
         public List<CinePlugins.CinePlugin> Plugins = new List<CinePlugins.CinePlugin>();
         public Tex2D MoveIcon, RotateIcon, ScaleIcon, LightIcon;
         float mxi, myi, mzi, mdrag;
-        public static SceneGraph EditGraph = null;
-        public static GraphNode EditNode = null;
+   
         public static Dictionary<TreeNode, GraphNode> NodeMap = new Dictionary<TreeNode, GraphNode>();
         public int EditMode = 0;
         private string oldNodeName = "";
@@ -57,5 +67,15 @@ namespace EditCinima
         private int utc = 0;
         public int MX, MY;
 
+        // 2D Rendering
+        public static SceneGraph EditGraph = null;
+        public static GraphNode EditNode = null;
+
+        // 3D Rendering
+        public GraphCam3D cam1 = null;
+        public SceneGraph3D scene3d = null;
+        public GraphNode3D ent1 = null;
+        public GraphLight3D light1 = null;
+        public PostProcessRender ppRen;
     }
 }

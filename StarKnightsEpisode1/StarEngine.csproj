@@ -206,7 +206,7 @@
     <Compile Include="Input\AppInput.cs" />
     <Compile Include="Input\VInput.cs" />
     <Compile Include="Lighting\VLight.cs" />
-    <Compile Include="Material\VMaterial.cs" />
+    <Compile Include="Material\Material3D.cs" />
     <Compile Include="Math\Maths.cs" />
     <Compile Include="PostProcess\Processes\VPPBlur.cs" />
     <Compile Include="PostProcess\VPostProcess.cs" />

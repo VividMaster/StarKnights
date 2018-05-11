@@ -12,9 +12,9 @@ namespace StarEngine.Lighting
     {
         Ambient,Directional,Point
     }
-    public class VLight : GraphNode3D
+    public class GraphLight3D : GraphNode3D
     {
-        public static VLight Active = null;
+        public static GraphLight3D Active = null;
         public bool CastShadows = true;
         public LightType Type = LightType.Point;
         public Vector3 Diff = new Vector3(0.5f, 0.5f, 0.5f);
