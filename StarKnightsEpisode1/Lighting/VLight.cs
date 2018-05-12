@@ -30,6 +30,10 @@ namespace StarEngine.Lighting
         public GraphLight3D()
         {
             //    ShadowMap = new Texture.VTexCube(Quality.ShadowMapWidth, Quality.ShadowMapHeight);
+            CreateShadowFBO();
+        }
+        public void CreateShadowFBO()
+        {
             ShadowFB = new VFrameBufferCube(Quality.ShadowMapWidth, Quality.ShadowMapHeight);
         }
         public void DrawShadowMap(SceneGraph3D graph)

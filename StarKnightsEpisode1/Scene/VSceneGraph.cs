@@ -75,19 +75,36 @@ namespace StarEngine.Scene
             }
             else
             {
-                foreach(var l in Lights)
+                int ls = 0;
+                GL.Disable(EnableCap.Blend);
+                foreach (var l in Lights)
                 {
+                    ls++;
                     l.DrawShadowMap(this);
+                //    Console.WriteLine("LightShadows:" + ls);
                 }
                 foreach (var c in Cams)
                 {
+                    bool first = true;
                     foreach (var l in Lights)
                     {
                         GraphLight3D.Active = l;
+                        if (first)
+                        {
+                            first = false;
+                            GL.Disable(EnableCap.Blend);
+                        }
+                        else
+                        {
+                            GL.Enable(EnableCap.Blend);
+                            GL.BlendFunc(BlendingFactor.One, BlendingFactor.One);
+                        }
+
                         foreach (var n in Nodes)
                         {
                             n.Present(c);
                         }
+                        
                     }
                 }
             }

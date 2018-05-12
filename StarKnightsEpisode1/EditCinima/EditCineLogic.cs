@@ -102,7 +102,10 @@ namespace EditCinima
 
 
             light1 = new StarEngine.Lighting.GraphLight3D();
+            var l2 = new StarEngine.Lighting.GraphLight3D();
 
+            l2.LocalPos = new OpenTK.Vector3(5, 25, 20);
+            l2.Diff = new OpenTK.Vector3(1, 1, 1);
 
 
             light1.LocalPos = new OpenTK.Vector3(0, 10, 60);
@@ -111,7 +114,11 @@ namespace EditCinima
 
 
             scene3d.Add(ent1);
+
+            scene3d.Add(l2);
+
             scene3d.Add(light1);
+
             scene3d.Add(cam1);
 
             light1.Diff = new OpenTK.Vector3(1, 1, 1);

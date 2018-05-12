@@ -88,7 +88,8 @@ namespace EditCinima
             */
            // ent1.Rot(new OpenTK.Vector3(0, r, 0), Space.Local);
             r = r + 1;
-            light1.Diff = new OpenTK.Vector3(0, 2, 2);
+
+            light1.Diff = new OpenTK.Vector3(2,2,1);
             light1.Pos(new OpenTK.Vector3(StarEngine.Util.Maths.Cos(r)*50, 30,StarEngine.Util.Maths.Sin(r)*50), Space.Local);
 
      //       cam1.LocalPos = new OpenTK.Vector3(0, 0, 30);
