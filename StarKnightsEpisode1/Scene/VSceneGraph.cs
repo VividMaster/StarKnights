@@ -41,7 +41,7 @@ namespace StarEngine.Scene
         public virtual void RenderDepth()
         {
             GL.ClearColor(new OpenTK.Graphics.Color4(1.0f, 1.0f, 1.0f, 1.0f));
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             if (CamOverride != null)
             {
                 foreach (var n in Nodes)
@@ -61,6 +61,7 @@ namespace StarEngine.Scene
 
         public virtual void Render()
         {
+          
             if (CamOverride != null)
             {
                 foreach (var l in Lights)
@@ -74,6 +75,10 @@ namespace StarEngine.Scene
             }
             else
             {
+                foreach(var l in Lights)
+                {
+                    l.DrawShadowMap(this);
+                }
                 foreach (var c in Cams)
                 {
                     foreach (var l in Lights)

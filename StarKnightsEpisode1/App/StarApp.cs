@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using StarEngine.Draw;
 using StarEngine.Tex;
 using StarEngine.FXS;
@@ -37,9 +37,9 @@ namespace StarEngine.App
         {
             this.CursorVisible = false;
             // GL.Disable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.AlphaTest);
+            //GL.Enable(EnableCap.AlphaTest);
             GL.Disable(EnableCap.CullFace);
-            GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
+            //GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
             //   GL.Disable(EnableCap.Blend);
             GL.Viewport(0, 0, W, H);
             //  GL.Disable(EnableCap.Lighting);

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Platform.Windows;
 namespace StarEngine.App
 {
     public class StarControl : GLControl
     {
         public static int W, H;
-        public StarControl()
+        public StarControl() : base(OpenTK.Graphics.GraphicsMode.Default,4,5,OpenTK.Graphics.GraphicsContextFlags.ForwardCompatible)
         {
 
         }
@@ -19,9 +19,10 @@ namespace StarEngine.App
         public void InitGL()
         {
 
-            GL.Enable(EnableCap.AlphaTest);
+
+            //GL.Enable(EnableCap.alp);
             GL.Disable(EnableCap.CullFace);
-            GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
+            //GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
             //   GL.Disable(EnableCap.Blend);
             GL.Viewport(0, 0, Width,Height);
             //  GL.Disable(EnableCap.Lighting);
@@ -34,7 +35,10 @@ namespace StarEngine.App
             StarApp.H = H;
             StarApp.RW = W;
             StarApp.RH = H;
-            
+            GL.Enable(EnableCap.DepthTest);
+            GL.DepthFunc(DepthFunction.Lequal);
+            GL.DepthRange(0.0f, 1.0f);
+            GL.ClearDepth(1.0f);
         }
         
         public void ResizeGL()

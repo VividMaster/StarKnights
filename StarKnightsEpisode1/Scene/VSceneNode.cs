@@ -53,6 +53,7 @@ namespace StarEngine.Scene
         public GraphNode3D()
         {
             Init();
+            Rot(new Vector3(0, 0, 0), Space.Local);
         }
         public virtual void Init()
         {

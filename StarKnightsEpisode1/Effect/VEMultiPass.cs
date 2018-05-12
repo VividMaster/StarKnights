@@ -8,44 +8,22 @@ namespace StarEngine.Effect
 {
     public class EMultiPass3D : Effect3D
     {
-        public EMultiPass3D() : base("", "Data/Shader/vsMP1.txt", "Data/Shader/fsMP1.txt")
+        public EMultiPass3D() : base("", "Data/Shader/vsMP1.glsl", "Data/Shader/fsMP1.glsl")
         {
 
         }
         public override void SetPars()
         {
-            if (Material.Material3D.Active.TCol != null)
-            {
-                SetBool("eC", true);
-            }
-            else
-            {
-                SetBool("eC", false);
-            }
-            if(Material.Material3D.Active.TNorm != null)
-            {
-                SetBool("eN", true);
-            }
-            else
-            {
-                SetBool("eN", false);
-            }
-            if (Material.Material3D.Active.TEnv != null)
-            {
-                SetBool("eE", true);
-            }
-            else
-            {
-                SetBool("eE", false);
-               // Environment.Exit(0);
-            }
+           
             //SetMat("MVP", Effect.FXG.Local * FXG.Proj);
             SetMat("model", Effect.FXG.Local);
-            SetMat("cam",OpenTK.Matrix4.Invert(OpenTK.Matrix4.CreateTranslation(FXG.Cam.WorldPos)) * FXG.Cam.CamWorld );
+            SetMat("view", OpenTK.Matrix4.Invert(OpenTK.Matrix4.CreateTranslation(FXG.Cam.WorldPos)) * FXG.Cam.CamWorld);
             SetMat("proj", FXG.Cam.ProjMat);
-            SetVec3("camP", FXG.Cam.WorldPos);
-            SetVec3("lP", Lighting.GraphLight3D.Active.WorldPos);
-            SetVec3("lC", Lighting.GraphLight3D.Active.Diff);
+            SetFloat("lightDepth", Settings.Quality.ShadowDepth);
+            SetVec3("viewPos", FXG.Cam.WorldPos);
+            SetVec3("lightPos", Lighting.GraphLight3D.Active.WorldPos);
+            SetVec3("lightCol", Lighting.GraphLight3D.Active.Diff);
+            SetVec3("lightSpec", Lighting.GraphLight3D.Active.Spec);
             SetFloat("atten", Lighting.GraphLight3D.Active.Atten);
             SetFloat("ambCE", Lighting.GraphLight3D.Active.AmbCE);
             SetFloat("matS", Material.Material3D.Active.Shine);
@@ -53,7 +31,7 @@ namespace StarEngine.Effect
             SetFloat("envS", Material.Material3D.Active.envS);
             SetTex("tC", 0);
             SetTex("tN", 1);
-            SetTex("tE", 2);
+            SetTex("tS", 2);
         }
     }
 }

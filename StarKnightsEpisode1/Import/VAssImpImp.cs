@@ -94,11 +94,11 @@ namespace StarEngine.Import
                     }
                     if (t.Count() == 0) 
                     {
-                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(t[0]));
+                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(t[i]));
                     }
                     else
                     {
-                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(new Vector3D(0, 0, 0)));
+                        m2.SetVertex(i, Cv(v), Cv(tan), Cv(bi), Cv(n), Cv2(t[i]));
                     }
                 }
                 int[] id = m.GetIndices();

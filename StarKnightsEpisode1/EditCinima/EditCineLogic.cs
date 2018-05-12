@@ -83,12 +83,38 @@ namespace EditCinima
             ppRen.Scene = scene3d;
 
             Console.WriteLine("Importing mesh.");
-            ent1 = Import.ImportNode("Data\\3D\\earth2.3ds");
+            ent1 = Import.ImportNode("Data\\3D\\testshadow1.3ds");
             Console.WriteLine("Set up.");
             var mat1 = new Material3D();
             Console.WriteLine("Loading texture.");
-            mat1.TCol = new Tex2D("Data\\3D\\planetmap.png");
+            mat1.TCol = new Tex2D("Data\\3D\\brick_2.png");
+            mat1.TNorm = new Tex2D("Data\\3D\\brick_2_NRM.png");
             Console.WriteLine("Loaded.");
+            var ge = ent1 as GraphEntity3D;
+
+            ge.SetMat(mat1);
+            cam1 = new GraphCam3D();
+            cam1.LocalPos = new OpenTK.Vector3(0, 25, 120);
+
+
+            //cam1.LookAt(ent1);
+
+
+
+            light1 = new StarEngine.Lighting.GraphLight3D();
+
+
+
+            light1.LocalPos = new OpenTK.Vector3(0, 10, 60);
+
+            ent1.Rot(new OpenTK.Vector3(0, 45, 0), Space.Local);
+
+
+            scene3d.Add(ent1);
+            scene3d.Add(light1);
+            scene3d.Add(cam1);
+
+            light1.Diff = new OpenTK.Vector3(1, 1, 1);
 
 
         }

@@ -232,6 +232,7 @@
     <Compile Include="Scripting.evaluator.cs" />
     <Compile Include="Scripting.Extensions.cs" />
     <Compile Include="Scripting.native.cs" />
+    <Compile Include="Settings\Quality.cs" />
     <Compile Include="Sound\VSoundSys.cs" />
     <Compile Include="Texture\VTex2D.cs" />
     <Compile Include="Texture\VTexBase.cs" />

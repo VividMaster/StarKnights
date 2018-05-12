@@ -58,7 +58,7 @@ namespace StarEngine.Scene
         public float MinZ = 1f, MaxZ = 700;
         public GraphCam3D()
         {
-           
+            Rot(new Vector3(0, 0, 0), Space.Local);
         }
         public Matrix4 CamWorld
         {

@@ -34,11 +34,21 @@ namespace EditCinima
             Visual.MakeCurrent();
             Visual.InitGL();
             Visual.ResizeGL();
+            SetAppInfo();
+        }
+
+        private void SetAppInfo()
+        {
+            AppInfo.W = Visual.Width;
+            AppInfo.H = Visual.Height;
+            AppInfo.RW = Visual.Width;
+            AppInfo.RH = Visual.Height;
         }
 
         private void Visual_Resize_1(object sender, EventArgs e)
         {
             ResizeUI();
+            SetAppInfo();
         }
 
 

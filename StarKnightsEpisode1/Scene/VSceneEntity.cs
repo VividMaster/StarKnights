@@ -7,6 +7,7 @@ using StarEngine.Data;
 using StarEngine.Visuals;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using StarEngine.Material;
 namespace StarEngine.Scene
 {
     public class GraphEntity3D : GraphNode3D
@@ -25,6 +26,21 @@ namespace StarEngine.Scene
         {
             Meshes = new List<VMesh>();
             Renderer = null;
+        }
+        public void SetMat(Material3D mat)
+        {
+            foreach(var m in Meshes)
+            {
+                m.Mat = mat;
+            }
+            foreach(var n in Sub)
+            {
+                if(n is GraphEntity3D)
+                {
+                    var ge = n as GraphEntity3D;
+                    ge.SetMat(mat);
+                }
+            }
         }
         public override void PresentDepth(GraphCam3D c)
         {

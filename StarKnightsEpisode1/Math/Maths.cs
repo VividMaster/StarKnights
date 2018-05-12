@@ -8,6 +8,22 @@ namespace StarEngine.Util
 {
     public static class Maths
     {
+        public static float DegToRad(float d)
+        {
+            return (float)Math.PI * d / 180.0f;
+        }
+        public static float RadToDeg(float r)
+        {
+            return r * (180.0f / (float)Math.PI);
+        }
+        public static float Cos(float d)
+        {
+            return (float)Math.Cos(DegToRad(d));
+        }
+        public static float Sin(float d)
+        {
+            return (float)Math.Sin(DegToRad(d));
+        }
         public static Vector2 Push(Vector2 p,float x,float y)
         {
             return new Vector2(p.X + x, p.Y + y);
@@ -34,16 +50,7 @@ namespace StarEngine.Util
             return p3.Length;
         }
 
-        public static float Cos(float degrees)
-        {
-            return (float)Math.Cos(MathHelper.DegreesToRadians(degrees));
-        }
-
-        public static float Sin(float degrees)
-        {
-            return (float)Math.Sin(MathHelper.DegreesToRadians(degrees));
-        }
-
+     
 
         public static void Rotate(ref Vector2 p, ref float a, ref Vector2 res)
         {

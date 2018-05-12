@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using StarEngine.App;
 using StarEngine.Tex;
 
@@ -29,11 +29,11 @@ namespace StarEngine.Draw
             //pm = Matrix4.CreateOrthographic(StarKnightsAPP.RW, StarKnightsAPP.RH, 0, 1);
 
 
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-           GL.MultMatrix(ref pm);
+           // GL.MatrixMode(MatrixMode.Modelview);
+           // GL.LoadIdentity();
+            //GL.MatrixMode(MatrixMode.Projection);
+            //GL.LoadIdentity();
+           //GL.MultMatrix(ref pm);
            // GL.Ortho(0, StarKnightsAPP.RW, StarKnightsAPP.RH, 0, -200, 1);
 
         }
@@ -76,7 +76,7 @@ namespace StarEngine.Draw
             img.Bind(0);
 
             //'  Col = new Vector4(1, 1, 1, 0.5f);
-
+            /*
             GL.Color4(Col);
 
             GL.Begin(PrimitiveType.Quads);
@@ -91,7 +91,7 @@ namespace StarEngine.Draw
             GL.Vertex2(xc[3],yc[3]);
 
             GL.End();
-
+            */
             img.Unbind(0);
 
         }
@@ -101,7 +101,7 @@ namespace StarEngine.Draw
             tex.Bind(0);
 
           //'  Col = new Vector4(1, 1, 1, 0.5f);
-
+          /*
             GL.Color4(Col);
 
             GL.Begin(PrimitiveType.Quads);
@@ -117,6 +117,7 @@ namespace StarEngine.Draw
 
             GL.End();
 
+    */
             tex.Unbind(0);
 
         }
@@ -124,6 +125,7 @@ namespace StarEngine.Draw
         public static void Rect(int x,int y,int w,int h)
         {
 
+            /*
             GL.Color4(Col);
 
             GL.Begin(PrimitiveType.Quads);
@@ -134,7 +136,7 @@ namespace StarEngine.Draw
             GL.Vertex2(x, y + h);
 
             GL.End();
-
+            */
         }
 
     }
