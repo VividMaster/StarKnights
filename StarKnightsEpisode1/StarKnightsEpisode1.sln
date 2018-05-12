@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayLoadEditor", "..\PayLoad
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayLoad2Editor", "..\PayloadEditor2\PayLoad2Editor.csproj", "{570C01CA-7A2F-4BCE-8EDB-1A7E6C094863}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarEditor", "..\StarEditor\StarEditor.csproj", "{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +152,14 @@ Global
 		{570C01CA-7A2F-4BCE-8EDB-1A7E6C094863}.Release|Any CPU.Build.0 = Release|Any CPU
 		{570C01CA-7A2F-4BCE-8EDB-1A7E6C094863}.Release|x64.ActiveCfg = Release|Any CPU
 		{570C01CA-7A2F-4BCE-8EDB-1A7E6C094863}.Release|x64.Build.0 = Release|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Debug|x64.Build.0 = Debug|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +178,7 @@ Global
 		{DAB50D4B-2144-4214-B798-7DC1F4DC7882} = {8807B744-588A-4BFD-AB16-649AC415FA09}
 		{A4D217A7-AAEB-4914-A46B-2E53D7305DF6} = {EE424B61-92D8-45EC-89BE-B247302A0AF2}
 		{570C01CA-7A2F-4BCE-8EDB-1A7E6C094863} = {8807B744-588A-4BFD-AB16-649AC415FA09}
+		{6F202625-7CF3-4CA7-A8A2-4D8E368D1FD0} = {4BE8174F-740C-4991-83D1-B19953E48080}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1740BE34-69BE-4E02-B836-C5B5051535AC}

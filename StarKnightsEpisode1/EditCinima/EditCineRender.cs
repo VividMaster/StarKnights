@@ -92,11 +92,11 @@ namespace EditCinima
             light1.Diff = new OpenTK.Vector3(2,2,1);
             light1.Pos(new OpenTK.Vector3(StarEngine.Util.Maths.Cos(r)*50, 30,StarEngine.Util.Maths.Sin(r)*50), Space.Local);
 
-     //       cam1.LocalPos = new OpenTK.Vector3(0, 0, 30);
+            //       cam1.LocalPos = new OpenTK.Vector3(0, 0, 30);
 
             //light1.LocalPos = cam1.LocalPos;
             //light1.LocalTurn = cam1.LocalTurn;
-
+            cam1.LocalPos = new OpenTK.Vector3(0, 25, 60);
             scene3d.Render();
 
             Visual.Swap();
